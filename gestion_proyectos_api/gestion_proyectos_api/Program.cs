@@ -12,11 +12,9 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
 
 
-var connectionString = builder.Configuration.GetConnectionString("PostgresDatabase");
-
 // Base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
-     options.UseNpgsql(connectionString)
+     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDatabase"))
 );
 
 

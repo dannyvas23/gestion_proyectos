@@ -1,0 +1,30 @@
+services:
+  postgresdb:
+    container_name: postgresdb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gestion_proyectos
+    volumes:
+      - postgres_postgresdb:/var/lib/postgresql/dacontainer_nameta/ 
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
+
+  gestion_proyectos_api:  
+    container_name: gestion_proyectos_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__PostgresDatabase=Server=postgresdb;Port=5432;Database=gestion_proyectos;Username=postgres;Password=postgres;Include Error Detail=true
+    ports:
+      - "9000:8080"
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro 

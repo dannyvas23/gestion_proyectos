@@ -1,5 +1,8 @@
 <Solution>
   <Project Path="Application/Application.csproj" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
   <Project Path="Domain/Domain.csproj" />
   <Project Path="gestion_proyectos_api/gestion_proyectos_api.csproj" />
   <Project Path="Infrastructure/Infrastructure.csproj" />
