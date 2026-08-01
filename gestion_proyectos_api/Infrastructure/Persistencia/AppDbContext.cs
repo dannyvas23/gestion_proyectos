@@ -18,11 +18,10 @@ public class AppDbContext : DbContext
         _settings = settings.CurrentValue;
     }
 
-    //todo
-    //public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Proyecto> Proyectos => Set<Proyecto>();
-    //public DbSet<Columna> Columnas => Set<Columna>();
-    //public DbSet<Tarea> Tareas => Set<Tarea>();
+    public DbSet<Columna> Columnas => Set<Columna>();
+    public DbSet<Tarea> Tareas => Set<Tarea>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -7,6 +7,9 @@ using GestionProyectos.Domain.Puertos;
 
 namespace Application.CasosDeUso
 {
+    /// <summary>
+    /// Casos de uso de proyectos: CRUD con paginación y filtro por nombre.
+    /// </summary>
     public class ProyectoUC
     {
         private readonly IProyectoRepositorio _proyectoRepo;
