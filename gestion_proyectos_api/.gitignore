@@ -39,6 +39,9 @@ Logs/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+**/bin/
+**/obj/
+
 # NUNIT
 *.VisualState.xml
 TestResult.xml
