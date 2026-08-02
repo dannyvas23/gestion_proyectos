@@ -10,16 +10,9 @@ namespace GestionProyectos.API.Controllers;
 /// <summary>
 /// Controller de tareas del tablero Kanban.
 /// Incluye CRUD, movimiento entre columnas y filtros.
-/// Notifica cambios en tiempo real via SignalR.
-/// 
-/// Para defender:
-/// - Mover tarea: recibe columna destino y nueva posición (índice).
-///   El caso de uso calcula el orden numérico usando la estrategia de gaps.
-/// - Filtros por responsable y prioridad se pasan como query string.
 /// </summary>
 [ApiController]
 [Route("api/tareas")]
-[Authorize]
 public class TareasController : ControllerBase
 {
     private readonly TareaUC _tareaUC;
@@ -28,9 +21,6 @@ public class TareasController : ControllerBase
     {
         _tareaUC = tareaUC;
     }
-
-    private string ObtenerUsuarioId() =>
-        User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
 
     [HttpGet("proyecto/{proyectoId}")]
     public async Task<ActionResult<List<TareaDto>>> ObtenerPorProyecto(
@@ -51,7 +41,6 @@ public class TareasController : ControllerBase
 
         // Obtener el proyectoId desde la columna para notificar
         var columnaId = peticion.ColumnaId;
-        // Notificar al grupo del tablero (se necesita proyectoId, lo obtenemos de la tarea)
         // Por simplicidad, el frontend envía el proyectoId en el header
         var proyectoId = Request.Headers["X-Proyecto-Id"].FirstOrDefault();
         if (Guid.TryParse(proyectoId, out var pid))

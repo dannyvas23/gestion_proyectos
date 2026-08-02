@@ -1,7 +1,5 @@
 using GestionProyectos.Application.CasosDeUso;
 using GestionProyectos.Application.DTOs;
-using GestionProyectos.Domain.Entidades;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionProyectos.API.Controllers;
