@@ -1,12 +1,26 @@
 using gestion_proyectos_api;
 using GestionProyectos.Infrastructure.Persistencia;
+using GestionProyectos.Infrastructure.SignalR;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// CORS: permitir peticiones del frontend Angular
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins(
+                builder.Configuration["Frontend:Url"] ?? "http://localhost:6000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials(); // Necesario para SignalR
+    });
+});
+
 // Add services to the container.
-
-
 builder.Services.AddAPIServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
@@ -25,6 +39,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// --- Migraciones automáticas---
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -32,8 +53,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Manejo global de excepciones
+app.UseMiddleware<ManejadorExcepcionesMiddleware>();
+
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Punto de conexión para SignalR
+app.MapHub<TableroHub>("/hub/tablero");
 
 app.Run();

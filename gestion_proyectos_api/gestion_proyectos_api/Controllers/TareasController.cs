@@ -1,9 +1,10 @@
-using System.Security.Claims;
 using GestionProyectos.Application.CasosDeUso;
 using GestionProyectos.Application.DTOs;
+using GestionProyectos.Application.Interfaces;
 using GestionProyectos.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GestionProyectos.API.Controllers;
 
@@ -16,10 +17,12 @@ namespace GestionProyectos.API.Controllers;
 public class TareasController : ControllerBase
 {
     private readonly TareaUC _tareaUC;
+    private readonly IServicioTablero _servicioTablero;
 
-    public TareasController(TareaUC tareaUC)
+    public TareasController(TareaUC tareaUC, IServicioTablero servicioTablero)
     {
         _tareaUC = tareaUC;
+        _servicioTablero = servicioTablero;
     }
 
     [HttpGet("proyecto/{proyectoId}")]
@@ -45,7 +48,7 @@ public class TareasController : ControllerBase
         var proyectoId = Request.Headers["X-Proyecto-Id"].FirstOrDefault();
         if (Guid.TryParse(proyectoId, out var pid))
         {
-            // TODO: Notificar a los clientes conectados al tablero del proyecto
+            await _servicioTablero.NotificarTareaCreada(pid, tarea);
         }
 
         return CreatedAtAction(nameof(ObtenerPorProyecto), new { proyectoId }, tarea);
@@ -59,7 +62,7 @@ public class TareasController : ControllerBase
         var proyectoId = Request.Headers["X-Proyecto-Id"].FirstOrDefault();
         if (Guid.TryParse(proyectoId, out var pid))
         {
-            // TODO: Notificar a los clientes conectados al tablero del proyecto
+            await _servicioTablero.NotificarTareaActualizada(pid, tarea);
         }
 
         return Ok(tarea);
@@ -74,7 +77,7 @@ public class TareasController : ControllerBase
 
         if (Guid.TryParse(proyectoId, out var pid))
         {
-            // TODO: Notificar a los clientes conectados al tablero del proyecto
+            await _servicioTablero.NotificarTareaEliminada(pid, id);
         }
 
         return NoContent();
@@ -88,7 +91,7 @@ public class TareasController : ControllerBase
         var proyectoId = Request.Headers["X-Proyecto-Id"].FirstOrDefault();
         if (Guid.TryParse(proyectoId, out var pid))
         {
-            // TODO: Notificar a los clientes conectados al tablero del proyecto
+            await _servicioTablero.NotificarTareaMovida(pid, tarea);
         }
 
         return Ok(tarea);

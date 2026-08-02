@@ -1,8 +1,10 @@
 ﻿using Application.CasosDeUso;
 using Domain.Puertos;
 using GestionProyectos.Application.CasosDeUso;
+using GestionProyectos.Application.Interfaces;
 using GestionProyectos.Domain.Puertos;
 using GestionProyectos.Infrastructure.Persistencia.Repositorios;
+using GestionProyectos.Infrastructure.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace gestion_proyectos_api
@@ -11,6 +13,9 @@ namespace gestion_proyectos_api
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
+            //Comunicacion continua
+            services.AddScoped<IServicioTablero, ServicioTablero>();
+
             // Repositorios
             services.AddScoped<IProyectoRepositorio, ProyectoRepositorio>();
             services.AddScoped<IColumnaRepositorio, ColumnaRepositorio>();
@@ -22,6 +27,9 @@ namespace gestion_proyectos_api
             services.AddScoped<ColumnaUC>();
             services.AddScoped<TareaUC>();
             services.AddScoped<UsuarioUC>();
+
+            // --- SignalR ---
+            services.AddSignalR();
             return services;
         }
     }

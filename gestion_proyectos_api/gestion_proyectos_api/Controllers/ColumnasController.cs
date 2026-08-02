@@ -1,5 +1,6 @@
 using GestionProyectos.Application.CasosDeUso;
 using GestionProyectos.Application.DTOs;
+using GestionProyectos.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionProyectos.API.Controllers;
@@ -12,10 +13,12 @@ namespace GestionProyectos.API.Controllers;
 public class ColumnasController : ControllerBase
 {
     private readonly ColumnaUC _columnaUC;
+    private readonly IServicioTablero _servicioTablero;
 
-    public ColumnasController(ColumnaUC columnaUC)
+    public ColumnasController(ColumnaUC columnaUC, IServicioTablero servicioTablero)
     {
         _columnaUC = columnaUC;
+        _servicioTablero = servicioTablero;
     }
 
 
@@ -30,6 +33,7 @@ public class ColumnasController : ControllerBase
     public async Task<ActionResult<ColumnaDto>> Crear([FromBody] CrearColumnaPeticion peticion)
     {
         var columna = await _columnaUC.Crear(peticion);
+        await _servicioTablero.NotificarColumnaCreada(peticion.ProyectoId, columna);
         return CreatedAtAction(nameof(ObtenerPorProyecto), new { proyectoId = peticion.ProyectoId }, columna);
     }
 
@@ -37,7 +41,7 @@ public class ColumnasController : ControllerBase
     public async Task<ActionResult<ColumnaDto>> Actualizar(Guid id, [FromBody] ActualizarColumnaPeticion peticion)
     {
         var columna = await _columnaUC.Actualizar(id, peticion);
-        //todo notificar a los usuarios que la columna ha sido actualizada
+        await _servicioTablero.NotificarColumnaActualizada(columna.ProyectoId, columna);
         return Ok(columna);
     }
 
