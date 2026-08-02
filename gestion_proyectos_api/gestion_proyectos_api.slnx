@@ -4,6 +4,6 @@
     <Build />
   </Project>
   <Project Path="Domain/Domain.csproj" />
-  <Project Path="gestion_proyectos_api/gestion_proyectos_api.csproj" />
+  <Project Path="gestion_proyectos_api/WebApi.csproj" />
   <Project Path="Infrastructure/Infrastructure.csproj" />
 </Solution>

@@ -11,22 +11,22 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["gestion_proyectos_api/gestion_proyectos_api.csproj", "gestion_proyectos_api/"]
+COPY ["gestion_proyectos_api/WebApi.csproj", "gestion_proyectos_api/"]
 COPY ["Application/Application.csproj", "Application/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-RUN dotnet restore "./gestion_proyectos_api/gestion_proyectos_api.csproj"
+RUN dotnet restore "./gestion_proyectos_api/WebApi.csproj"
 COPY . .
 WORKDIR "/src/gestion_proyectos_api"
-RUN dotnet build "./gestion_proyectos_api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./gestion_proyectos_api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Esta fase se usa en producción o cuando se ejecuta desde VS en modo normal (valor predeterminado cuando no se usa la configuración de depuración)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "gestion_proyectos_api.dll"]
+ENTRYPOINT ["dotnet", "WebApi.dll"]
