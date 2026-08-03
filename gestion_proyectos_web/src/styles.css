@@ -1,19 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/layout/styles/layout/layout.scss";
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  background-color: #f8f9fa;
-  height: 100%;
-}
-/* Evitar overflow horizontal */
-.layout-wrapper {
-  overflow-x: hidden;
-}
 
-/* Ajuste para tablas PrimeNG */
-.p-datatable .p-datatable-tbody > tr > td {
-  padding: 0.5rem 0.75rem;
-}
+@import "primeng/resources/primeng.css";
+
+@import "primeicons/primeicons.css";
+
+
+@import "../node_modules/primeflex/primeflex.css";
