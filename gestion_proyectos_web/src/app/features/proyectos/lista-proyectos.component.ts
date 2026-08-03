@@ -1,16 +1,29 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 // PrimeNG
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToolbarModule } from 'primeng/toolbar';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-// IMPORTANTE: No uses el enum si no está definido
-// import { EstadoProyecto } from '../../core/models'; // ← Coméntalo si da error
 import { TagModule } from 'primeng/tag';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
+
+
+import { CrearProyectoPeticion, ActualizarProyectoPeticion, EstadoProyecto, ProyectoDto } from '../../core/models';
+import { ProyectoService } from '../../core/services/proyecto.service';
+
+
+/**
+ * Lista de proyectos con paginación backend y filtro por nombre.
+ */
 
 @Component({
   selector: 'app-lista-proyectos',
@@ -24,10 +37,331 @@ import { TagModule } from 'primeng/tag';
     ToolbarModule,
     PaginatorModule,
     InputTextareaModule,
-    TagModule
+    TagModule,
+    DialogModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DropdownModule,
+    ReactiveFormsModule,
   ],
+  providers: [MessageService, ConfirmationService],
   template: `
     <div class="p-4">
+      <p-toast></p-toast>
+      <p-confirmDialog></p-confirmDialog>
+
+    <div class="card">
+      <p-toolbar styleClass="mb-3 gap-2">
+        <ng-template pTemplate="start">
+          <h2 class="m-0 text-900">
+            <i class="pi pi-folder mr-2"></i>Proyectos
+          </h2>
+        </ng-template>
+        <ng-template pTemplate="end">
+          <p-button 
+                    label="Nuevo Proyecto"
+                    icon="pi pi-plus"
+                    (onClick)="abrirNuevo()">
+          </p-button>
+        </ng-template>
+      </p-toolbar>
+
+      <!-- Tabla de proyectos -->
+      <p-table [value]="proyectos"
+               [lazy]="false"
+               [rowHover]="true"
+               styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha Inicio</th>
+            <th>Fin Previsto</th>
+            <th>Estado</th>
+            <th style="width: 200px;">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-proyecto>
+          <tr>
+            <td class="font-semibold">{{ proyecto.nombre }}</td>
+            <td class="text-overflow-ellipsis" style="max-width: 250px;">{{ proyecto.descripcion }}</td>
+            <td>{{ proyecto.fechaInicio | date:'dd/MM/yyyy' }}</td>
+            <td>{{ proyecto.fechaFinPrevista ? (proyecto.fechaFinPrevista | date:'dd/MM/yyyy') : 'N/A' }}</td>
+            <td>
+              <p-tag [value]="proyecto.estado"
+                     [severity]="obtenerSeveridadEstado(proyecto.estado)">
+              </p-tag>
+            </td>
+            <td>
+              <div class="flex gap-1">
+                <p-button icon="pi pi-th-large"
+                          [rounded]="true"
+                          [text]="true"
+                          severity="success"
+                          pTooltip="Ver Tablero"
+                          (onClick)="verTablero(proyecto)">
+                </p-button>
+                <p-button 
+                          icon="pi pi-pencil"
+                          [rounded]="true"
+                          [text]="true"
+                          severity="info"
+                          pTooltip="Editar"
+                          (onClick)="abrirEdicion(proyecto)">
+                </p-button>
+                <p-button 
+                          icon="pi pi-trash"
+                          [rounded]="true"
+                          [text]="true"
+                          severity="danger"
+                          pTooltip="Eliminar"
+                          (onClick)="confirmarEliminar(proyecto)">
+                </p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center p-4 text-500">No hay proyectos</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      
+    </div>
+
+    <!-- Diálogo crear/editar proyecto -->
+    <p-dialog [header]="editando ? 'Editar Proyecto' : 'Nuevo Proyecto'"
+              [(visible)]="dialogoVisible"
+              [modal]="true"
+              [style]="{ width: '550px' }">
+      <form [formGroup]="formulario" class="flex flex-column gap-3 pt-3">
+        <div class="flex flex-column gap-1">
+          <label class="font-semibold">Nombre</label>
+          <input pInputText formControlName="nombre" placeholder="Nombre del proyecto" />
+        </div>
+
+        <div class="flex flex-column gap-1">
+          <label class="font-semibold">Descripción</label>
+          <textarea pInputTextarea formControlName="descripcion" rows="3"
+                    placeholder="Descripción del proyecto"></textarea>
+        </div>        
+
+        <div class="flex flex-column gap-1" *ngIf="editando">
+          <label class="font-semibold">Estado</label>
+          <p-dropdown formControlName="estado"
+                      [options]="estados"
+                      optionLabel="label"
+                      optionValue="value"
+                      placeholder="Seleccione un estado"
+                      appendTo="body">
+          </p-dropdown>
+        </div>
+      </form>
+
+      <ng-template pTemplate="footer">
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" (onClick)="dialogoVisible = false"></p-button>
+        <p-button label="Guardar" icon="pi pi-check" (onClick)="guardar()" [disabled]="formulario.invalid"></p-button>
+      </ng-template>
+    </p-dialog>
+
+      
+    </div>
+  `,
+  styles: [`
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .gap-1 {
+      gap: 0.5rem;
+    }
+    .gap-2 {
+      gap: 1rem;
+    }
+    .w-20rem {
+      width: 20rem;
+    }
+    .overflow-x-auto {
+      overflow-x: auto;
+    }
+    .field {
+      margin-bottom: 1rem;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .w-full {
+      width: 100%;
+    }
+  `]
+})
+export class ListaProyectosComponent {
+
+  constructor(
+    private fb: FormBuilder,
+    private proyectoService: ProyectoService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private router: Router
+  ) { }
+
+
+  proyectos: ProyectoDto[] = [];
+  total = 0;
+  pagina = 1;
+  tamanio = 10;
+  filtroNombre = '';
+  editando = false;
+  proyectoEditandoId: string | null = null;
+
+  formulario!: FormGroup;
+  dialogoVisible = false;
+
+  estados = [
+    { label: 'Activo', value: EstadoProyecto.Activo },
+    { label: 'Pausado', value: EstadoProyecto.Pausado },
+    { label: 'Finalizado', value: EstadoProyecto.Finalizado }
+  ];
+
+  ngOnInit(): void {
+    this.formulario = this.fb.group({
+      nombre: ['', []],
+      descripcion: [''],
+      fechaInicio: [new Date()],
+      fechaFinPrevista: [null],
+      estado: [EstadoProyecto.Activo]
+    });
+    this.cargarProyectos();
+  }
+
+  cargarProyectos(): void {
+    this.proyectoService.obtenerPaginado(this.pagina, this.tamanio, this.filtroNombre || undefined).subscribe({
+      next: (resp) => {
+        console.log('Proyectos cargados:', resp);
+        this.proyectos = resp.items;
+        this.total = resp.total;
+      },
+      error: () => this.messageService.add({
+        severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los proyectos'
+      })
+    });
+  }
+
+  abrirNuevo(): void {
+    this.editando = false;
+    this.proyectoEditandoId = null;
+    this.formulario.reset({ fechaInicio: new Date(), estado: EstadoProyecto.Activo });
+    this.dialogoVisible = true;
+  }
+
+  verTablero(proyecto: ProyectoDto): void {
+    this.router.navigate(['/tablero', proyecto.id]);
+  }
+
+  guardar(): void {
+    const valores = this.formulario.value;
+
+    if (this.editando && this.proyectoEditandoId) {
+      const peticion: ActualizarProyectoPeticion = {
+        nombre: valores.nombre,
+        descripcion: valores.descripcion,
+        fechaInicio: valores.fechaInicio?.toISOString() || new Date().toISOString(),
+        fechaFinPrevista: valores.fechaFinPrevista?.toISOString() || null,
+        estado: valores.estado
+      };
+      this.proyectoService.actualizar(this.proyectoEditandoId, peticion).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proyecto actualizado' });
+          this.dialogoVisible = false;
+          this.cargarProyectos();
+        },
+        error: (err) => this.messageService.add({
+          severity: 'error', summary: 'Error', detail: err.error?.error || 'Error al actualizar'
+        })
+      });
+    } else {
+      const peticion: CrearProyectoPeticion = {
+        nombre: valores.nombre,
+        descripcion: valores.descripcion,
+        fechaInicio: valores.fechaInicio?.toISOString() || new Date().toISOString(),
+        fechaFinPrevista: valores.fechaFinPrevista?.toISOString() || null
+      };
+      this.proyectoService.crear(peticion).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proyecto creado' });
+          this.dialogoVisible = false;
+          this.cargarProyectos();
+        },
+        error: (err) => this.messageService.add({
+          severity: 'error', summary: 'Error', detail: err.error?.error || 'Error al crear'
+        })
+      });
+    }
+  }
+
+  brirEdicion(proyecto: ProyectoDto): void {
+    this.editando = true;
+    this.proyectoEditandoId = proyecto.id;
+    this.formulario.patchValue({
+      nombre: proyecto.nombre,
+      descripcion: proyecto.descripcion,
+      fechaInicio: new Date(proyecto.fechaInicio),
+      fechaFinPrevista: proyecto.fechaFinPrevista ? new Date(proyecto.fechaFinPrevista) : null,
+      estado: proyecto.estado
+    });
+    this.dialogoVisible = true;
+  }
+
+  abrirEdicion(proyecto: ProyectoDto): void {
+    this.editando = true;
+    this.proyectoEditandoId = proyecto.id;
+    this.formulario.patchValue({
+      nombre: proyecto.nombre,
+      descripcion: proyecto.descripcion,
+      fechaInicio: new Date(proyecto.fechaInicio),
+      fechaFinPrevista: proyecto.fechaFinPrevista ? new Date(proyecto.fechaFinPrevista) : null,
+      estado: proyecto.estado
+    });
+    this.dialogoVisible = true;
+  }
+
+  confirmarEliminar(proyecto: ProyectoDto): void {
+    this.confirmationService.confirm({
+      message: `¿Está seguro de eliminar el proyecto "${proyecto.nombre}"?`,
+      header: 'Confirmar eliminación',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.proyectoService.eliminar(proyecto.id).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proyecto eliminado' });
+            this.cargarProyectos();
+          },
+          error: () => this.messageService.add({
+            severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el proyecto'
+          })
+        });
+      }
+    });
+  }
+
+  obtenerSeveridadEstado(estado: EstadoProyecto): 'success' | 'info' | 'warning' | 'danger' {
+    switch (estado) {
+      case EstadoProyecto.Activo: return 'success';
+      case EstadoProyecto.Pausado: return 'warning';
+      case EstadoProyecto.Finalizado: return 'info';
+      default: return 'info';
+    }
+  }
+}
+
+
+/*
+
+  <div class="p-4">
       <!-- 
       <p-toast></p-toast>
       <p-confirmDialog></p-confirmDialog>-->
@@ -112,112 +446,9 @@ import { TagModule } from 'primeng/tag';
               </tr>
             </ng-template>
           </p-table>
-        </div>
-
-       
-      </div>
-
-      
+        </div>       
+      </div>  
     </div>
-  `,
-  styles: [`
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .gap-1 {
-      gap: 0.5rem;
-    }
-    .gap-2 {
-      gap: 1rem;
-    }
-    .w-20rem {
-      width: 20rem;
-    }
-    .overflow-x-auto {
-      overflow-x: auto;
-    }
-    .field {
-      margin-bottom: 1rem;
-    }
-    .field label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    .w-full {
-      width: 100%;
-    }
-  `]
-})
-export class ListaProyectosComponent {
-  dialogoVisible = false;
-  
-  // Datos de ejemplo
-  proyectos = [
-    {
-      id: 1,
-      nombre: 'Sistema de Gestión',
-      descripcion: 'Sistema integral para gestión de proyectos y tareas',
-      fechaInicio: new Date('2024-01-15'),
-      fechaFinPrevista: new Date('2024-06-30'),
-      estado: 'Activo',
-      severidad: 'success'
-    },
-    {
-      id: 2,
-      nombre: 'App Móvil',
-      descripcion: 'Aplicación móvil para clientes',
-      fechaInicio: new Date('2024-02-01'),
-      fechaFinPrevista: new Date('2024-08-15'),
-      estado: 'En Progreso',
-      severidad: 'info'
-    },
-    {
-      id: 3,
-      nombre: 'Migración Cloud',
-      descripcion: 'Migración de infraestructura a la nube',
-      fechaInicio: new Date('2024-03-10'),
-      fechaFinPrevista: new Date('2024-05-20'),
-      estado: 'Pendiente',
-      severidad: 'warning'
-    },
-    {
-      id: 4,
-      nombre: 'Dashboard Analytics',
-      descripcion: 'Dashboard para análisis de datos en tiempo real',
-      fechaInicio: new Date('2024-04-01'),
-      fechaFinPrevista: new Date('2024-07-01'),
-      estado: 'En Progreso',
-      severidad: 'info'
-    },
-    {
-      id: 5,
-      nombre: 'Integración API',
-      descripcion: 'Integración con APIs de terceros',
-      fechaInicio: new Date('2024-05-01'),
-      fechaFinPrevista: null,
-      estado: 'Completado',
-      severidad: 'success'
-    },
-    {
-      id: 6,
-      nombre: 'Sistema de Reporting',
-      descripcion: 'Sistema de reportes y análisis de datos',
-      fechaInicio: new Date('2024-06-01'),
-      fechaFinPrevista: new Date('2024-09-30'),
-      estado: 'Pendiente',
-      severidad: 'warning'
-    }
-  ];
 
-  // Opciones de estado para el dropdown
-  estados = [
-    { label: 'Activo', value: 'Activo' },
-    { label: 'En Progreso', value: 'En Progreso' },
-    { label: 'Pendiente', value: 'Pendiente' },
-    { label: 'Completado', value: 'Completado' },
-    { label: 'Cancelado', value: 'Cancelado' }
-  ];
-}
+
+*/

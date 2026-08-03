@@ -13,7 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("PermitirFrontend", policy =>
     {
         policy.WithOrigins(
-                builder.Configuration["Frontend:Url"] ?? "http://localhost:6000")
+                builder.Configuration["Frontend:Url"] ?? "http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials(); // Necesario para SignalR
@@ -55,6 +55,9 @@ if (app.Environment.IsDevelopment())
 
 // Manejo global de excepciones
 app.UseMiddleware<ManejadorExcepcionesMiddleware>();
+
+// CORS
+app.UseCors("PermitirFrontend");
 
 app.UseAuthorization();
 

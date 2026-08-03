@@ -20,6 +20,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__PostgresDatabase=Server=postgresdb;Port=5432;Database=gestion_proyectos;Username=postgres;Password=postgres;Include Error Detail=true
+      - Frontend_Url=http://localhost:4200
     ports:
       - "9000:8080"
     depends_on:

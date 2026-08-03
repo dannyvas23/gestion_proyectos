@@ -1,9 +1,9 @@
 // Modelos de proyecto
 
 export enum EstadoProyecto {
-  Activo = 'Activo',
-  Pausado = 'Pausado',
-  Finalizado = 'Finalizado'
+  Activo = 1,
+  Pausado = 2,
+  Finalizado = 3
 }
 
 export interface ProyectoDto {

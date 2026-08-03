@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import * as signalR from '@microsoft/signalr';
 import { environment } from '../../environments/environment';
-import { AuthService } from './auth.service';
 import { TareaDto, ColumnaDto } from '../models';
 
 /**
@@ -34,7 +33,7 @@ export class SignalrService implements OnDestroy {
   usuarioConectado$ = new Subject<{ usuarioId: string; nombre: string }>();
   usuarioDesconectado$ = new Subject<{ usuarioId: string; nombre: string }>();
 
-  constructor(private authService: AuthService) {}
+
 
   /**
    * Conectar al Hub y suscribirse a un tablero específico.
@@ -47,7 +46,7 @@ export class SignalrService implements OnDestroy {
 
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(environment.hubUrl, {
-        accessTokenFactory: () => this.authService.obtenerToken() || ''
+        accessTokenFactory: () => ''
       })
       .withAutomaticReconnect()
       .build();
