@@ -6,6 +6,8 @@ using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine("Iniciando aplicación...\n");
+Console.WriteLine("Variable Frontend:Url -> {0}\n", builder.Configuration["Frontend:Url"]);
 
 // CORS: permitir peticiones del frontend Angular
 builder.Services.AddCors(options =>

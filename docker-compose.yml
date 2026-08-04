@@ -1,0 +1,15 @@
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}gestion_proyectos_api
+    build:
+      context: ./gestion_proyectos_api
+      dockerfile: gestion_proyectos_api/Dockerfile
+
+  gestion_proyectos_web:
+    image: ${DOCKER_REGISTRY-}gestion_proyectos_web
+    build:
+      context: ./gestion_proyectos_web
+      dockerfile: Dockerfile      
+      
+  postgresdb:
+    image: postgres:17

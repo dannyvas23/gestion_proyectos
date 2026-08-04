@@ -1,18 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import * as signalR from '@microsoft/signalr';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { TareaDto, ColumnaDto } from '../models';
 
 /**
  * Servicio de SignalR para comunicación en tiempo real.
- *
- * Para defender:
  * - HubConnectionBuilder: crea la conexión al Hub del backend.
- * - withUrl(url, { accessTokenFactory }): envía el JWT en el query string del handshake.
- * - withAutomaticReconnect(): reconecta automáticamente si se pierde la conexión.
  * - Subject<T>: emite eventos que los componentes pueden suscribirse con .subscribe().
- * - Al destruir el servicio o cambiar de tablero: se desuscribe del grupo y se detiene la conexión.
  */
 @Injectable({
   providedIn: 'root'
@@ -48,7 +43,7 @@ export class SignalrService implements OnDestroy {
       .withUrl(environment.hubUrl, {
         accessTokenFactory: () => ''
       })
-      .withAutomaticReconnect()
+      .withAutomaticReconnect() //reconecta automáticamente si se pierde la conexión.
       .build();
 
     // Registrar listeners para cada tipo de evento
