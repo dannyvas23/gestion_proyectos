@@ -88,7 +88,7 @@ import { ProyectoService } from '../../core/services/proyecto.service';
             <td>{{ proyecto.fechaInicio | date:'dd/MM/yyyy' }}</td>
             <td>{{ proyecto.fechaFinPrevista ? (proyecto.fechaFinPrevista | date:'dd/MM/yyyy') : 'N/A' }}</td>
             <td>
-              <p-tag [value]="proyecto.estado"
+              <p-tag [value]="obtenerNombreEstado(proyecto.estado)"
                      [severity]="obtenerSeveridadEstado(proyecto.estado)">
               </p-tag>
             </td>
@@ -348,107 +348,21 @@ export class ListaProyectosComponent {
     });
   }
 
-  obtenerSeveridadEstado(estado: EstadoProyecto): 'success' | 'info' | 'warning' | 'danger' {
+  obtenerSeveridadEstado(estado: number): 'success' | 'info' | 'warning' | 'danger' {
     switch (estado) {
-      case EstadoProyecto.Activo: return 'success';
-      case EstadoProyecto.Pausado: return 'warning';
-      case EstadoProyecto.Finalizado: return 'info';
+      case 1: return 'success';
+      case 2: return 'warning';
+      case 3: return 'info';
       default: return 'info';
     }
   }
+
+  obtenerNombreEstado(estado: number): 'Activo' | 'Pausado' | 'Finalizado' | 'Desconocido' {
+    switch (estado) {
+      case 1: return 'Activo';
+      case 2: return 'Pausado';
+      case 3: return 'Finalizado';
+      default: return 'Desconocido';
+    }
+  }
 }
-
-
-/*
-
-  <div class="p-4">
-      <!-- 
-      <p-toast></p-toast>
-      <p-confirmDialog></p-confirmDialog>-->
-
-      <div class="card">
-        <!-- Toolbar -->
-        <div class="flex justify-content-between align-items-center mb-3">
-          <h2 class="m-0">
-            <i class="pi pi-folder mr-2"></i>Proyectos
-          </h2>
-          <div class="flex gap-2">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input pInputText
-                     type="text"
-                     placeholder="Buscar por nombre..."
-                     class="w-20rem" />
-            </span>
-            <p-button label="Nuevo Proyecto"
-                      icon="pi pi-plus"
-                      (onClick)="dialogoVisible = true">
-            </p-button>
-          </div>
-        </div>
-
-        <!-- Tabla de proyectos -->
-        <div class="overflow-x-auto">
-          <p-table [value]="proyectos"
-                   [rowHover]="true"
-                   styleClass="p-datatable-sm">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Fecha Inicio</th>
-                <th>Fin Previsto</th>
-                <th>Estado</th>
-                <th style="width: 200px;">Acciones</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-proyecto>
-              <tr>
-                <td class="font-semibold">{{ proyecto.nombre }}</td>
-                <td>{{ proyecto.descripcion }}</td>
-                <td>{{ proyecto.fechaInicio | date:'dd/MM/yyyy' }}</td>
-                <td>{{ proyecto.fechaFinPrevista ? (proyecto.fechaFinPrevista | date:'dd/MM/yyyy') : 'N/A' }}</td>
-                <td>
-                  <p-tag [value]="proyecto.estado"
-                         [severity]="proyecto.severidad">
-                  </p-tag>
-                </td>
-                <td>
-                  <div class="flex gap-1">
-                    <p-button icon="pi pi-th-large"
-                              [rounded]="true"
-                              [text]="true"
-                              severity="success"
-                              pTooltip="Ver Tablero">
-                    </p-button>
-                    <p-button icon="pi pi-pencil"
-                              [rounded]="true"
-                              [text]="true"
-                              severity="info"
-                              pTooltip="Editar">
-                    </p-button>
-                    <p-button icon="pi pi-trash"
-                              [rounded]="true"
-                              [text]="true"
-                              severity="danger"
-                              pTooltip="Eliminar">
-                    </p-button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-              <tr>
-                <td colspan="6" class="text-center p-4">
-                  <i class="pi pi-inbox text-4xl text-400 mb-2"></i>
-                  <p class="m-0">No hay proyectos disponibles</p>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>       
-      </div>  
-    </div>
-
-
-*/

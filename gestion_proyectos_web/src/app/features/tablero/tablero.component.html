@@ -1,0 +1,227 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<!-- ============================================================ -->
+<!--  TOOLBAR SUPERIOR                                            -->
+<!-- ============================================================ -->
+<div class="card mb-3">
+  <p-toolbar>
+    <ng-template pTemplate="start">
+      <div class="flex align-items-center gap-2">
+        <p-button icon="pi pi-arrow-left" [text]="true" [rounded]="true" (onClick)="volver()"></p-button>
+        <div>
+          <h2 class="m-0 text-900">{{ proyecto?.nombre || 'Cargando...' }}</h2>
+          <span class="text-500 text-sm">{{ proyecto?.descripcion }}</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="center">
+      <!-- Usuarios conectados -->
+      <div class="flex align-items-center gap-2" *ngIf="usuariosConectados.length > 0">
+        <i class="pi pi-wifi text-green-500"></i>
+        <p-avatarGroup>
+          <p-avatar *ngFor="let u of usuariosConectados"
+                    [label]="obtenerIniciales(u.nombre)"
+                    shape="circle"
+                    size="normal"
+                    [pTooltip]="u.nombre"
+                    [style]="{ 'background-color': '#2196F3', 'color': '#fff' }">
+          </p-avatar>
+        </p-avatarGroup>
+        <span class="text-500 text-sm">{{ usuariosConectados.length }} conectado(s)</span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div class="flex gap-2">
+        <p-button icon="pi pi-plus" label="Columna"
+                  (onClick)="abrirNuevaColumna()"></p-button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+</div>
+
+<!-- ============================================================ -->
+<!--  BARRA DE FILTROS                                            -->
+<!-- ============================================================ -->
+<div class="card mb-3">
+  <div class="flex align-items-center gap-3 flex-wrap">
+    <span class="font-semibold text-600"><i class="pi pi-filter mr-1"></i>Filtros:</span>
+
+    <!-- Búsqueda por texto -->
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" [(ngModel)]="filtroBusqueda"
+             placeholder="Buscar tareas..." style="width: 220px;" />
+    </span>
+
+    <!-- Filtro por responsable -->
+    <p-dropdown [options]="usuarios"
+                [(ngModel)]="filtroResponsable"
+                optionLabel="nombre"
+                optionValue="id"
+                placeholder="Responsable"
+                [showClear]="true"
+                [style]="{ width: '200px' }"
+                appendTo="body">
+    </p-dropdown>
+
+    <!-- Filtro por prioridad -->
+    <p-dropdown [options]="prioridades"
+                [(ngModel)]="filtroPrioridad"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Prioridad"
+                [showClear]="true"
+                [style]="{ width: '160px' }"
+                appendTo="body">
+    </p-dropdown>
+
+    <p-button icon="pi pi-filter-slash" label="Limpiar" [text]="true" (onClick)="limpiarFiltros()"></p-button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  TABLERO KANBAN                                              -->
+<!-- ============================================================ -->
+<div class="kanban-board" cdkDropListGroup>
+  <!-- Contenedor de columnas arrastrables -->
+  <div cdkDropList
+       [cdkDropListData]="columnas"
+       cdkDropListOrientation="horizontal"
+       (cdkDropListDropped)="onColumnaDrop($event)"
+       class="kanban-columns-container">
+
+    <div *ngFor="let columna of columnas; trackBy: trackByColumna"
+         class="kanban-column" cdkDrag>
+
+      <!-- Header de columna -->
+      <div class="kanban-column-header" cdkDragHandle>
+        <div class="flex align-items-center justify-content-between w-full">
+          <div class="flex align-items-center gap-2">
+            <span class="font-bold text-900">{{ columna.nombre }}</span>
+            <p-badge [value]="getTareasFiltradas(columna.tareas).length.toString()" severity="info"></p-badge>
+          </div>
+          <div class="flex gap-1">
+            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" size="small"
+                      (onClick)="abrirEditarColumna(columna)"></p-button>
+            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" size="small" severity="danger"
+                      (onClick)="eliminarColumna(columna)"></p-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de tareas (droppable) -->
+      <div cdkDropList
+           [cdkDropListData]="columna.tareas"
+           [id]="'col-' + columna.id"
+           [cdkDropListConnectedTo]="listaIdsColumnas"
+           (cdkDropListDropped)="onTareaDrop($event, columna.id)"
+           class="kanban-task-list">
+
+        <!-- Tarjeta de tarea (draggable) -->
+        <div *ngFor="let tarea of getTareasFiltradas(columna.tareas); trackBy: trackByTarea"
+             cdkDrag class="kanban-task-card">
+
+          <!-- Indicador de prioridad -->
+          <div class="kanban-priority-bar"
+               [ngClass]="{
+                 'bg-green-400': tarea.prioridad === 1,
+                 'bg-blue-400': tarea.prioridad === 2,
+                 'bg-orange-400': tarea.prioridad === 3,
+                 'bg-red-500': tarea.prioridad === 4
+               }">
+          </div>
+
+          <div class="kanban-task-content">
+            <div class="flex justify-content-between align-items-start">
+              <span class="font-semibold text-900 text-sm">{{ tarea.titulo }}</span>
+              <div class="flex gap-1">
+                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" size="small"
+                          (onClick)="abrirEditarTarea(tarea)"></p-button>
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" size="small" severity="danger"
+                          (onClick)="eliminarTarea(tarea)"></p-button>
+              </div>
+            </div>
+
+            <p class="text-600 text-xs mt-1 mb-2 line-clamp" *ngIf="tarea.descripcion">
+              {{ tarea.descripcion }}
+            </p>
+
+            <div class="flex justify-content-between align-items-center mt-2">
+              <p-tag [value]="obtenerNombrePrioridad(tarea.prioridad)" [severity]="obtenerSeveridadPrioridad(tarea.prioridad)"
+                     [style]="{ 'font-size': '0.7rem' }"></p-tag>
+              <div class="flex align-items-center gap-1" *ngIf="tarea.responsableNombre">
+                <p-avatar [label]="obtenerIniciales(tarea.responsableNombre)"
+                          shape="circle" size="normal"
+                          [pTooltip]="tarea.responsableNombre"
+                          [style]="{ 'background-color': '#9C27B0', 'color': '#fff', 'width': '24px', 'height': '24px', 'font-size': '0.65rem' }">
+                </p-avatar>
+                <span class="text-500 text-xs">{{ tarea.responsableNombre }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder mientras se arrastra -->
+          <div *cdkDragPlaceholder class="kanban-drag-placeholder"></div>
+        </div>
+
+        <!-- Botón agregar tarea -->
+        <div class="kanban-add-task">
+          <p-button icon="pi pi-plus" label="Tarea" [text]="true" size="small"
+                    styleClass="w-full" (onClick)="abrirNuevaTarea(columna.id)"></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  DIÁLOGO COLUMNA                                             -->
+<!-- ============================================================ -->
+<p-dialog [header]="editandoColumna ? 'Editar Columna' : 'Nueva Columna'"
+          [(visible)]="dialogoColumna" [modal]="true" [style]="{ width: '400px' }">
+  <div class="flex flex-column gap-3 pt-3">
+    <div class="flex flex-column gap-1">
+      <label class="font-semibold">Nombre de la columna</label>
+      <input pInputText [(ngModel)]="columnaNombre" placeholder="Ej: Por Hacer, En Progreso..." />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" icon="pi pi-times" [text]="true" (onClick)="dialogoColumna = false"></p-button>
+    <p-button label="Guardar" icon="pi pi-check" (onClick)="guardarColumna()" [disabled]="!columnaNombre.trim()"></p-button>
+  </ng-template>
+</p-dialog>
+
+<!-- ============================================================ -->
+<!--  DIÁLOGO TAREA                                               -->
+<!-- ============================================================ -->
+<p-dialog [header]="editandoTarea ? 'Editar Tarea' : 'Nueva Tarea'"
+          [(visible)]="dialogoTarea" [modal]="true" [style]="{ paddingT : '30px', width: '500px' }">
+  <div class="flex flex-column gap-3 pt-3">
+    <div class="flex flex-column gap-1">
+      <label class="font-semibold">Título</label>
+      <input pInputText [(ngModel)]="tareaTitulo" placeholder="Título de la tarea" />
+    </div>
+    <div class="flex flex-column gap-1">
+      <label class="font-semibold">Descripción</label>
+      <textarea pInputTextarea [(ngModel)]="tareaDescripcion" rows="3" placeholder="Descripción"></textarea>
+    </div>
+    <div class="flex flex-column gap-1">
+      <label class="font-semibold">Prioridad</label>
+      <p-dropdown [options]="prioridades" [(ngModel)]="tareaPrioridad"
+                  optionLabel="label" optionValue="value" [style]="{width : '100%'}" appendTo="body"></p-dropdown>
+    </div>
+    <div class="flex flex-column gap-1">
+      <label class="font-semibold">Responsable</label>
+      <p-dropdown [options]="usuarios" [(ngModel)]="tareaResponsableId"
+                  optionLabel="nombre" optionValue="id"
+                  placeholder="Sin asignar" [showClear]="true"  [style]="{width : '100%'}" appendTo="body"></p-dropdown>  
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" icon="pi pi-times" [text]="true" (onClick)="dialogoTarea = false"></p-button>
+    <p-button label="Guardar" icon="pi pi-check" (onClick)="guardarTarea()" [disabled]="!tareaTitulo.trim()"></p-button>
+  </ng-template>
+</p-dialog>

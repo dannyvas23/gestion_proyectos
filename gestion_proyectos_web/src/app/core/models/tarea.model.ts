@@ -1,10 +1,10 @@
 // Modelos de tarea
 
 export enum Prioridad {
-  Baja = 'Baja',
-  Media = 'Media',
-  Alta = 'Alta',
-  Critica = 'Critica'
+  Baja = 1,
+  Media = 2,
+  Alta = 3,
+  Critica = 4
 }
 
 export interface TareaDto {

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { ListaProyectosComponent } from './features/proyectos/lista-proyectos.component';
+import { TableroComponent } from './features/tablero/tablero.component';
 
 
 export const routes: Routes = [
@@ -24,7 +25,7 @@ export const routes: Routes = [
             },
             {
                 path: 'tablero/:id',
-                component: ListaProyectosComponent
+                component: TableroComponent
                 //loadComponent: () => import('./features/tablero/tablero.component').then(m => m.TableroComponent)
             },
         ]

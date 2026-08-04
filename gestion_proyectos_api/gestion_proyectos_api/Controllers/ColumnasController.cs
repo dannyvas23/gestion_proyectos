@@ -53,5 +53,12 @@ public class ColumnasController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("reordenar")]
+    public async Task<ActionResult<List<ColumnaDto>>> Reordenar([FromBody] ReordenarColumnasPeticion peticion)
+    {
+        var columnas = await _columnaUC.Reordenar(peticion);
+        await _servicioTablero.NotificarColumnasReordenadas(peticion.ProyectoId, columnas);
+        return Ok(columnas);
+    }
 
 }
