@@ -201,6 +201,14 @@ export class TableroComponent implements OnInit, OnDestroy {
    * - transferArrayItem: CDK utility que mueve un elemento de un array a otro.
    */
   onTareaDrop(event: CdkDragDrop<TareaDto[]>, columnaDestinoId: string): void {
+    //const estadoPrevio = structuredClone(this.columnas);
+    // Guardar estado para reversión
+    const estadoPrevio = this.columnas.map(c => ({
+      ...c,
+      tareas: [...c.tareas]
+    }));
+
+
     if (event.previousContainer === event.container) {
       // Mover dentro de la misma columna
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -220,13 +228,8 @@ export class TableroComponent implements OnInit, OnDestroy {
       columnaDestinoId: columnaDestinoId,
       nuevaPosicion: event.currentIndex
     };
-
-    // Guardar estado para reversión
-    const estadoPrevio = this.columnas.map(c => ({
-      ...c,
-      tareas: [...c.tareas]
-    }));
-
+    //console.log('Estado previo:', estadoPrevio);
+    //console.log('Moviendo tarea:', peticion);
     this.tareaService.mover(peticion, this.proyectoId).subscribe({
       next: (tareaActualizada) => {
         // Actualizar la tarea con los datos del servidor

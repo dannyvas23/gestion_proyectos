@@ -15,7 +15,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { CalendarModule } from 'primeng/calendar';
 
 import { CrearProyectoPeticion, ActualizarProyectoPeticion, EstadoProyecto, ProyectoDto } from '../../core/models';
 import { ProyectoService } from '../../core/services/proyecto.service';
@@ -43,6 +43,7 @@ import { ProyectoService } from '../../core/services/proyecto.service';
     ConfirmDialogModule,
     DropdownModule,
     ReactiveFormsModule,
+    CalendarModule,
   ],
   providers: [MessageService, ConfirmationService],
   template: `
@@ -57,6 +58,19 @@ import { ProyectoService } from '../../core/services/proyecto.service';
             <i class="pi pi-folder mr-2"></i>Proyectos
           </h2>
         </ng-template>
+
+        <ng-template pTemplate="center">
+          <!-- Filtro por nombre -->
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText
+                   type="text"
+                   placeholder="Buscar por nombre..."
+                   (input)="filtrar($event)"
+                   style="width: 300px;" />
+          </span>
+        </ng-template>
+
         <ng-template pTemplate="end">
           <p-button 
                     label="Nuevo Proyecto"
@@ -127,6 +141,13 @@ import { ProyectoService } from '../../core/services/proyecto.service';
           </tr>
         </ng-template>
       </p-table>
+
+      <p-paginator [rows]="tamanio"
+                   [totalRecords]="total"
+                   [rowsPerPageOptions]="[5, 10, 20]"
+                   (onPageChange)="onPageChange($event)"
+                   styleClass="mt-3">
+      </p-paginator>
       
     </div>
 
@@ -146,6 +167,17 @@ import { ProyectoService } from '../../core/services/proyecto.service';
           <textarea pInputTextarea formControlName="descripcion" rows="3"
                     placeholder="Descripción del proyecto"></textarea>
         </div>        
+
+        <div class="grid">
+          <div class="col-6 flex flex-column gap-1">
+            <label class="font-semibold">Fecha de Inicio</label>
+            <p-calendar formControlName="fechaInicio" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body"></p-calendar>
+          </div>
+          <div class="col-6 flex flex-column gap-1">
+            <label class="font-semibold">Fin Previsto</label>
+            <p-calendar formControlName="fechaFinPrevista" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body"></p-calendar>
+          </div>
+        </div>
 
         <div class="flex flex-column gap-1" *ngIf="editando">
           <label class="font-semibold">Estado</label>
@@ -346,6 +378,18 @@ export class ListaProyectosComponent {
         });
       }
     });
+  }
+
+  filtrar(event: Event): void {
+    this.filtroNombre = (event.target as HTMLInputElement).value;
+    this.pagina = 1;
+    this.cargarProyectos();
+  }
+
+  onPageChange(event: any): void {
+    this.pagina = Math.floor(event.first / event.rows) + 1;
+    this.tamanio = event.rows;
+    this.cargarProyectos();
   }
 
   obtenerSeveridadEstado(estado: number): 'success' | 'info' | 'warning' | 'danger' {
