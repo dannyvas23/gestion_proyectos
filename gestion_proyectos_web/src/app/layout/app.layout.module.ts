@@ -22,13 +22,12 @@ import { CommonModule } from '@angular/common';
 @NgModule({
     declarations: [
         AppMenuitemComponent,
-        AppTopBarComponent,
         AppFooterComponent,
         AppMenuComponent,
         AppSidebarComponent,
         AppLayoutComponent,
     ],
-    imports: [
+    imports: [        
         CommonModule,
         FormsModule,
         HttpClientModule,
@@ -39,7 +38,8 @@ import { CommonModule } from '@angular/common';
         InputSwitchModule,
         RippleModule,
         RouterModule,
-        AppConfigModule
+        AppConfigModule,
+        AppTopBarComponent,
     ],
     exports: [AppLayoutComponent]
 })
