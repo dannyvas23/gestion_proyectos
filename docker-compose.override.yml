@@ -21,6 +21,9 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__PostgresDatabase=${CONNECTION_STRING}
       - AppSettings__SaltGeneradorHash=${SALT_GENERADOR_HASH}
+      - JwtConfig__Key=${JWT_KEY}
+      - JwtConfig__Issuer=${JWT_ISSUER}
+      - JwtConfig__Audience=${JWT_AUDIENCE}      
       - Frontend__Url=http://localhost:9600 #Puerto definido para el frontend
     ports:
       - "9500:8080"

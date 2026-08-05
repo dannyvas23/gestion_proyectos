@@ -126,10 +126,10 @@ public class TareaUC
     /// Calcula la nueva posición de una tarea al insertarla en un índice dado.
     /// 
     /// Estrategia:
-    /// - Si la lista está vacía → posición = GAP_INICIAL (1000)
-    /// - Si se inserta al inicio → posición = primer elemento / 2
-    /// - Si se inserta al final → posición = último elemento + GAP_INICIAL
-    /// - Si se inserta en medio → posición = promedio entre vecinos    /// 
+    /// - Si la lista está vacía -> posición = GAP_INICIAL (1000)
+    /// - Si se inserta al inicio -> posición = primer elemento / 2
+    /// - Si se inserta al final -> posición = último elemento + GAP_INICIAL
+    /// - Si se inserta en medio -> posición = promedio entre vecinos    /// 
     /// </summary>
     public static double CalcularNuevaPosicion(List<double> ordenesExistentes, int nuevaPosicion)
     {
