@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260801033110_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20260805022107_CambiosConNuevoPepperSaltGeneracionHash")]
+    partial class CambiosConNuevoPepperSaltGeneracionHash
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,11 +32,14 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Activa")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("Orden")
                         .HasColumnType("integer");
@@ -48,7 +51,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProyectoId");
 
-                    b.ToTable("Columna");
+                    b.ToTable("columnas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entidades.Proyecto", b =>
@@ -98,7 +101,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("timestamp with time zone");
@@ -106,15 +110,17 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Orden")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("Prioridad")
-                        .HasColumnType("integer");
+                    b.Property<string>("Prioridad")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("ResponsableId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -122,7 +128,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ResponsableId");
 
-                    b.ToTable("Tarea");
+                    b.ToTable("tareas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entidades.Usuario", b =>
@@ -132,26 +138,34 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Activo")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("CorreoElectronico")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Rol")
-                        .HasColumnType("integer");
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuario");
+                    b.HasIndex("CorreoElectronico")
+                        .IsUnique();
+
+                    b.ToTable("usuarios", (string)null);
 
                     b.HasData(
                         new
@@ -160,8 +174,8 @@ namespace Infrastructure.Migrations
                             Activo = true,
                             CorreoElectronico = "admin@gestion.com",
                             Nombre = "Administrador",
-                            PasswordHash = "$2a$11$zXFOf4l2thtWyxhmcsnDT.wu0iCrCytHQWLz9b15x/n61EWDPuvVS",
-                            Rol = 1
+                            PasswordHash = "$2a$11$jU5w1nbtaHPBtejM6QNBX.oU8BJT/WRz0L1UreuWqxvFoamJHPOe.",
+                            Rol = "Administrador"
                         },
                         new
                         {
@@ -169,8 +183,8 @@ namespace Infrastructure.Migrations
                             Activo = true,
                             CorreoElectronico = "miembro@gestion.com",
                             Nombre = "Miembro",
-                            PasswordHash = "$2a$11$qq0VvS9VOe9LZ2f1uzi8yOheV2XUoWCiVA2OjGJ3As0dS2La/HiES",
-                            Rol = 2
+                            PasswordHash = "$2a$11$TX24mECUOH4HvNjvCGc1NuW05lIVP/qZYhGSZeuBwVj22ngOmubym",
+                            Rol = "Miembro"
                         });
                 });
 
@@ -195,7 +209,8 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entidades.Usuario", "Responsable")
                         .WithMany("TareasAsignadas")
-                        .HasForeignKey("ResponsableId");
+                        .HasForeignKey("ResponsableId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Columna");
 

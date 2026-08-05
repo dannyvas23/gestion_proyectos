@@ -1,5 +1,5 @@
 
-using GestionProyectos.Application.CasosDeUso;
+using Application.CasosDeUso;
 using Xunit;
 
 namespace Tests
