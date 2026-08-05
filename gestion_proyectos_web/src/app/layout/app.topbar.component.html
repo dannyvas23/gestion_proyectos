@@ -13,13 +13,20 @@
     </button>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">       
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Usuario: Danny</span>
-        </button>
-        <button class="p-link layout-topbar-button" [routerLink]="'/exit'">
-            <i class="pi pi-sign-out"></i>
-            <span>Salir</span>
-        </button>
+        <div class="flex align-items-center gap-3">
+        <span class="text-600 text-sm" >
+          <i class="pi pi-user mr-1"></i>
+          {{authService.obtenerNombre()}}
+          <span class="ml-1 text-xs surface-300 border-round px-3 py-1">{{authService.esAdministrador() ? 'Rol:Admin' : 'Rol: Miembro'}}</span>
+        </span>
+        <p-button icon="pi pi-sign-out"
+                  severity="danger"
+                  [text]="true"
+                  [rounded]="true"
+                  pTooltip="Cerrar sesión"
+                  (onClick)="authService.logout()"
+                  >
+        </p-button>
+        </div>
     </div>
 </div>

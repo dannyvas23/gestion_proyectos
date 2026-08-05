@@ -19,7 +19,7 @@ import { CalendarModule } from 'primeng/calendar';
 
 import { CrearProyectoPeticion, ActualizarProyectoPeticion, EstadoProyecto, ProyectoDto } from '../../core/models';
 import { ProyectoService } from '../../core/services/proyecto.service';
-
+import { AuthService } from '../../core/services/auth.service';
 
 /**
  * Lista de proyectos con paginación backend y filtro por nombre.
@@ -124,6 +124,7 @@ import { ProyectoService } from '../../core/services/proyecto.service';
                           (onClick)="abrirEdicion(proyecto)">
                 </p-button>
                 <p-button 
+                          *ngIf="esAdmin"
                           icon="pi pi-trash"
                           [rounded]="true"
                           [text]="true"
@@ -237,7 +238,8 @@ export class ListaProyectosComponent {
     private fb: FormBuilder,
     private proyectoService: ProyectoService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    private confirmationService: ConfirmationService,    
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -328,9 +330,11 @@ export class ListaProyectosComponent {
           this.dialogoVisible = false;
           this.cargarProyectos();
         },
-        error: (err) => this.messageService.add({
-          severity: 'error', summary: 'Error', detail: err.error?.error || 'Error al crear'
+        error: (err) => {
+          this.messageService.add({
+          severity: 'error', summary: 'Error', detail: err.status === 403 ? 'No tiene permisos para crear proyectos' : err.error?.error || 'Error al crear'
         })
+        }
       });
     }
   }
@@ -408,5 +412,9 @@ export class ListaProyectosComponent {
       case 3: return 'Finalizado';
       default: return 'Desconocido';
     }
+  }
+
+   get esAdmin(): boolean {
+    return this.authService.esAdministrador();
   }
 }

@@ -55,6 +55,7 @@ namespace gestion_proyectos_api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Eliminar(Guid id)
         {
             await _proyectoUC.Eliminar(id);

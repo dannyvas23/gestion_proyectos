@@ -1,8 +1,8 @@
 // Modelos de usuario — reflejan los DTOs del backend
 
 export enum RolUsuario {
-  Administrador = 'Administrador',
-  Miembro = 'Miembro'
+  Administrador = 1,
+  Miembro = 2
 }
 
 export interface UsuarioDto {
