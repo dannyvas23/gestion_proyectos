@@ -1,6 +1,6 @@
-using GestionProyectos.Domain.Enums;
+using Domain.Enums;
 
-namespace GestionProyectos.Application.DTOs;
+namespace Application.DTOs;
 
 public class TareaDto
 {

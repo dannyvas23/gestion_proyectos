@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
 
-namespace GestionProyectos.Infrastructure.SignalR;
+namespace Infrastructure.SignalR;
 
 /// <summary>
 /// Hub de SignalR para comunicación en tiempo real del tablero.

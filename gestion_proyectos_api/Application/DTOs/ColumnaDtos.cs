@@ -1,4 +1,4 @@
-namespace GestionProyectos.Application.DTOs;
+namespace Application.DTOs;
 
 public class ColumnaDto
 {

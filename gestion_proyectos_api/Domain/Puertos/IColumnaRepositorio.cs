@@ -1,4 +1,4 @@
-﻿using GestionProyectos.Domain.Entidades;
+﻿using Domain.Entidades;
 
 namespace Domain.Puertos
 {

@@ -1,11 +1,11 @@
 using Application.Excepciones;
 using Domain.Puertos;
-using GestionProyectos.Application.DTOs;
-using GestionProyectos.Domain.Entidades;
-using GestionProyectos.Domain.Enums;
-using GestionProyectos.Domain.Puertos;
+using Application.DTOs;
+using Domain.Entidades;
+using Domain.Enums;
+using Domain.Puertos;
 
-namespace GestionProyectos.Application.CasosDeUso;
+namespace Application.CasosDeUso;
 
 /// <summary>
 /// Casos de uso de tareas: CRUD

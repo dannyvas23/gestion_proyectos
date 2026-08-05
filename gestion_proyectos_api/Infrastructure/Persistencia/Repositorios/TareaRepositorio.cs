@@ -1,9 +1,9 @@
-using GestionProyectos.Domain.Entidades;
-using GestionProyectos.Domain.Enums;
-using GestionProyectos.Domain.Puertos;
+using Domain.Entidades;
+using Domain.Enums;
+using Domain.Puertos;
 using Microsoft.EntityFrameworkCore;
 
-namespace GestionProyectos.Infrastructure.Persistencia.Repositorios;
+namespace Infrastructure.Persistencia.Repositorios;
 
 
 /// <summary>

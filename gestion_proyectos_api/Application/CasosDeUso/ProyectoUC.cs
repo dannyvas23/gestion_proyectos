@@ -1,9 +1,9 @@
 ﻿using Application.Comun;
 using Application.DTOs;
 using Application.Excepciones;
-using GestionProyectos.Domain.Entidades;
-using GestionProyectos.Domain.Enums;
-using GestionProyectos.Domain.Puertos;
+using Domain.Entidades;
+using Domain.Enums;
+using Domain.Puertos;
 
 namespace Application.CasosDeUso
 {

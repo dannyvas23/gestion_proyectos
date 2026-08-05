@@ -1,4 +1,4 @@
-namespace GestionProyectos.Domain.Enums;
+namespace Domain.Enums;
 
 /// <summary>
 /// Estados posibles de un proyecto.

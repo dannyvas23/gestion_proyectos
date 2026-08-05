@@ -1,6 +1,6 @@
-using GestionProyectos.Domain.Enums;
+using Domain.Enums;
 
-namespace GestionProyectos.Domain.Entidades;
+namespace Domain.Entidades;
 
 /// <summary>
 /// Representa un usuario del sistema.

@@ -1,9 +1,9 @@
 using Application.Excepciones;
 using Domain.Puertos;
-using GestionProyectos.Application.DTOs;
-using GestionProyectos.Domain.Entidades;
+using Application.DTOs;
+using Domain.Entidades;
 
-namespace GestionProyectos.Application.CasosDeUso;
+namespace Application.CasosDeUso;
 
 /// <summary>
 /// Casos de uso de columnas.

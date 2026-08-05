@@ -1,12 +1,12 @@
-using GestionProyectos.Application.CasosDeUso;
-using GestionProyectos.Application.DTOs;
-using GestionProyectos.Application.Interfaces;
-using GestionProyectos.Domain.Enums;
+using Application.CasosDeUso;
+using Application.DTOs;
+using Application.Interfaces;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace GestionProyectos.API.Controllers;
+namespace API.Controllers;
 
 /// <summary>
 /// Controller de tareas del tablero Kanban.
