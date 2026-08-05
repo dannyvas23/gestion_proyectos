@@ -1,8 +1,8 @@
-using GestionProyectos.Domain.Entidades;
+using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GestionProyectos.Infrastructure.Persistencia.Configuraciones;
+namespace Infrastructure.Persistencia.Configuraciones;
 
 public class TareaConfiguracion : IEntityTypeConfiguration<Tarea>
 {

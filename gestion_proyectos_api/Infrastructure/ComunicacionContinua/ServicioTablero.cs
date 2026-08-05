@@ -1,8 +1,9 @@
-using GestionProyectos.Application.DTOs;
-using GestionProyectos.Application.Interfaces;
+using Application.DTOs;
+using Application.Interfaces;
+using Infrastructure.SignalR;
 using Microsoft.AspNetCore.SignalR;
 
-namespace GestionProyectos.Infrastructure.SignalR;
+namespace Infrastructure.ComunicacionContinua;
 
 /// <summary>
 /// Implementación del servicio de notificaciones en tiempo real.

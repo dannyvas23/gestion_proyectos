@@ -1,6 +1,6 @@
-using GestionProyectos.Domain.Entidades;
+using Domain.Entidades;
 
-namespace GestionProyectos.Domain.Puertos
+namespace Domain.Puertos
 { 
     /// <summary>
     /// Puerto para operaciones de persistencia de proyectos.

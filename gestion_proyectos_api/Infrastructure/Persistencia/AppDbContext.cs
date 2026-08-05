@@ -1,10 +1,10 @@
 using Application.Comun;
-using GestionProyectos.Domain.Entidades;
-using GestionProyectos.Domain.Enums;
+using Domain.Entidades;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace GestionProyectos.Infrastructure.Persistencia;
+namespace Infrastructure.Persistencia;
 
 /// <summary>
 /// Contexto de Entity Framework Core.

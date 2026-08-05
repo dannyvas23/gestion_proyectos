@@ -1,7 +1,7 @@
-using GestionProyectos.Domain.Entidades;
-using GestionProyectos.Domain.Enums;
+using Domain.Entidades;
+using Domain.Enums;
 
-namespace GestionProyectos.Domain.Puertos
+namespace Domain.Puertos
 { 
     /// <summary>
     /// Puerto para operaciones de persistencia de tareas.

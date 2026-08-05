@@ -1,4 +1,4 @@
-namespace GestionProyectos.Domain.Entidades;
+namespace Domain.Entidades;
 
 /// <summary>
 /// Representa una columna del tablero kanban de un proyecto. (ej: Por Hacer, En Progreso, Hecho).

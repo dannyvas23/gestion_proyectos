@@ -1,11 +1,9 @@
 ﻿using Application.CasosDeUso;
 using Domain.Puertos;
-using GestionProyectos.Application.CasosDeUso;
-using GestionProyectos.Application.Interfaces;
-using GestionProyectos.Domain.Puertos;
-using GestionProyectos.Infrastructure.Persistencia.Repositorios;
-using GestionProyectos.Infrastructure.SignalR;
+using Application.Interfaces;
+using Infrastructure.Persistencia.Repositorios;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.ComunicacionContinua;
 
 namespace gestion_proyectos_api
 {

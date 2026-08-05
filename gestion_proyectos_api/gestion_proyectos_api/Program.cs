@@ -1,6 +1,6 @@
 using gestion_proyectos_api;
-using GestionProyectos.Infrastructure.Persistencia;
-using GestionProyectos.Infrastructure.SignalR;
+using Infrastructure.Persistencia;
+using Infrastructure.SignalR;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Middleware;
 

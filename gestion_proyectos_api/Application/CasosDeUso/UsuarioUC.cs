@@ -1,9 +1,9 @@
 using Application.DTOs;
 using Application.Excepciones;
-using GestionProyectos.Domain.Entidades;
-using GestionProyectos.Domain.Puertos;
+using Domain.Entidades;
+using Domain.Puertos;
 
-namespace GestionProyectos.Application.CasosDeUso;
+namespace Application.CasosDeUso;
 
 /// <summary>
 /// Casos de uso de usuarios (solo se creo principales).

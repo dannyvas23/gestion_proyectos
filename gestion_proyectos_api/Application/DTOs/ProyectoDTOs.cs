@@ -1,4 +1,4 @@
-﻿using GestionProyectos.Domain.Enums;
+﻿using Domain.Enums;
 
 namespace Application.DTOs
 {

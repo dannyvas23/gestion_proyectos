@@ -1,9 +1,9 @@
-using GestionProyectos.Application.CasosDeUso;
-using GestionProyectos.Application.DTOs;
-using GestionProyectos.Application.Interfaces;
+using Application.CasosDeUso;
+using Application.DTOs;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GestionProyectos.API.Controllers;
+namespace API.Controllers;
 
 /// <summary>
 /// Controller de columnas del tablero.

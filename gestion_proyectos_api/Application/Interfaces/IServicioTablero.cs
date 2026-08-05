@@ -1,8 +1,8 @@
 
 
-using GestionProyectos.Application.DTOs;
+using Application.DTOs;
 
-namespace GestionProyectos.Application.Interfaces;
+namespace Application.Interfaces;
 
 public interface IServicioTablero
 {

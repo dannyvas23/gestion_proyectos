@@ -1,8 +1,8 @@
 using Domain.Puertos;
-using GestionProyectos.Domain.Entidades;
+using Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 
-namespace GestionProyectos.Infrastructure.Persistencia.Repositorios;
+namespace Infrastructure.Persistencia.Repositorios;
 
 
 /// <summary>

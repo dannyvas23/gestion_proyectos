@@ -1,8 +1,8 @@
 using Application.DTOs;
-using GestionProyectos.Application.CasosDeUso;
+using Application.CasosDeUso;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GestionProyectos.API.Controllers;
+namespace API.Controllers;
 
 /// <summary>
 /// Controller para administración de usuarios.

@@ -1,4 +1,4 @@
-namespace GestionProyectos.Domain.Enums;
+namespace Domain.Enums;
 
 /// <summary>
 /// Niveles de prioridad de una tarea.
