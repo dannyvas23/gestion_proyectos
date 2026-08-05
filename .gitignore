@@ -1,0 +1,18 @@
+# Archivos específicos de usuario
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Cache/Directorio de opciones de Visual Studio 2015
+.vs/
+.github/
+.vscode/
+.sonarqube/
+.sonarlint/
+.sonarnetwork/
+
+**/bin/
+**/obj/
+
+.env
