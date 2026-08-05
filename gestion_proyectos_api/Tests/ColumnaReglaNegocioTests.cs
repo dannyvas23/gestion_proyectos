@@ -1,7 +1,7 @@
 using Application.Excepciones;
 using Domain.Puertos;
-using GestionProyectos.Application.CasosDeUso;
-using GestionProyectos.Domain.Entidades;
+using Application.CasosDeUso;
+using Domain.Entidades;
 using Moq;
 using Xunit;
 
