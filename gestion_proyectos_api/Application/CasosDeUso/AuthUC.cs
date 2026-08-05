@@ -8,11 +8,6 @@ namespace Application.CasosDeUso;
 
 /// <summary>
 /// Casos de uso de autenticación: login y registro de usuarios.
-/// 
-/// Para defender: 
-/// - El login busca al usuario por correo, verifica la contraseña con BCrypt + pepper,
-///   y genera un JWT con claims de Id, correo y rol.
-/// - El registro valida que el correo no exista, hashea la contraseña y crea el usuario.
 /// </summary>
 public class AuthUC
 {

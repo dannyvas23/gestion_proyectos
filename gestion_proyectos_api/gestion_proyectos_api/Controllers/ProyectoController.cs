@@ -40,6 +40,7 @@ namespace gestion_proyectos_api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult<ProyectoDto>> Crear([FromBody] CrearProyectoPeticion peticion)
         {
             var proyecto = await _proyectoUC.Crear(peticion);
