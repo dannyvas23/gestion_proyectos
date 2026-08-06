@@ -1,0 +1,1572 @@
+{
+  "info": {
+    "_postman_id": "bd18cd44-6fe6-4eab-9942-4ab4ee7fa14f",
+    "name": "0. GestionProyectos - Kanban",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7447198"
+  },
+  "item": [
+    {
+      "name": "Gestion Proyectos",
+      "item": [
+        {
+          "name": "ObtenerPorId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/proyectos/49e6a30a-8041-44d7-908f-a83d44963db1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "proyectos",
+                "49e6a30a-8041-44d7-908f-a83d44963db1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ObtenerPorId",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos/49e6a30a-8041-44d7-908f-a83d44963db1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos",
+                    "49e6a30a-8041-44d7-908f-a83d44963db1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 01 Aug 2026 03:53:23 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"49e6a30a-8041-44d7-908f-a83d44963db1\",\n    \"nombre\": \"Kanban\",\n    \"descripcion\": \"Test\",\n    \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\n    \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\n    \"estado\": 1,\n    \"activo\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "ListarProyectos - paginacion (filtro nombre)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/proyectos?pagina=1&tamanio=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "proyectos"
+              ],
+              "query": [
+                {
+                  "key": "pagina",
+                  "value": "1"
+                },
+                {
+                  "key": "tamanio",
+                  "value": "10"
+                },
+                {
+                  "key": "nombre",
+                  "value": "Proyecto Kanban",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ListarProyectos - paginacion (filtro nombre)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos?pagina=1&tamanio=1&nombre=Kanban",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos"
+                  ],
+                  "query": [
+                    {
+                      "key": "pagina",
+                      "value": "1"
+                    },
+                    {
+                      "key": "tamanio",
+                      "value": "1"
+                    },
+                    {
+                      "key": "nombre",
+                      "value": "Kanban"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 01 Aug 2026 03:55:35 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"items\": [\n        {\n            \"id\": \"49e6a30a-8041-44d7-908f-a83d44963db1\",\n            \"nombre\": \"Kanban\",\n            \"descripcion\": \"Test\",\n            \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\n            \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\n            \"estado\": 1,\n            \"activo\": true\n        }\n    ],\n    \"total\": 1,\n    \"pagina\": 1,\n    \"tamanio\": 1,\n    \"totalPaginas\": 1\n}"
+            },
+            {
+              "name": "ListarProyectos - paginacion (filtro nombre)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos?pagina=1&tamanio=10",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos"
+                  ],
+                  "query": [
+                    {
+                      "key": "pagina",
+                      "value": "1"
+                    },
+                    {
+                      "key": "tamanio",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 01 Aug 2026 04:02:15 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"items\": [\n        {\n            \"id\": \"ceb1764e-90c1-4ea1-bdfa-73b4ddab7c5c\",\n            \"nombre\": \"string\",\n            \"descripcion\": \"string\",\n            \"fechaInicio\": \"2026-08-01T03:44:32.93Z\",\n            \"fechaFinPrevista\": \"2026-08-01T03:44:32.93Z\",\n            \"estado\": 1,\n            \"activo\": true\n        },\n        {\n            \"id\": \"b93b005a-5764-4caf-802b-0d8512e4db29\",\n            \"nombre\": \"string3\",\n            \"descripcion\": \"string\",\n            \"fechaInicio\": \"2026-08-01T03:44:32.93Z\",\n            \"fechaFinPrevista\": \"2026-08-01T03:44:32.93Z\",\n            \"estado\": 1,\n            \"activo\": true\n        },\n        {\n            \"id\": \"49e6a30a-8041-44d7-908f-a83d44963db1\",\n            \"nombre\": \"Kanban\",\n            \"descripcion\": \"Test ACTUALIZACION\",\n            \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\n            \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\n            \"estado\": 1,\n            \"activo\": true\n        }\n    ],\n    \"total\": 3,\n    \"pagina\": 1,\n    \"tamanio\": 10,\n    \"totalPaginas\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImIyYzNkNGU1LWY2YTctODkwMS1iY2RlLWYxMjM0NTY3ODkwMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Im1pZW1icm9AZ2VzdGlvbi5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTWllbWJybyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Ik1pZW1icm8iLCJleHAiOjE3ODU5Mjk1NTMsImlzcyI6Ikdlc3Rpb25Qcm95ZWN0b3NBUEkiLCJhdWQiOiJHZXN0aW9uUHJveWVjdG9zV2ViIn0.NKhAF8_X14iUQCrix9-Iv-52UYfOq-LKhPS3DBJo-mc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Proyecto con Bearer\",//\"Proyecto Kanban\",\r\n  \"descripcion\": \"Test\",\r\n  \"fechaInicio\": \"2026-07-31T22:34:11.930Z\",\r\n  \"fechaFinPrevista\": \"2026-08-04T22:34:11.930Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/proyectos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "proyectos"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Crear",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nombre\": \"Kanban\",\r\n  \"descripcion\": \"Test\",\r\n  \"fechaInicio\": \"2026-07-31T22:34:11.930Z\",\r\n  \"fechaFinPrevista\": \"2026-08-04T22:34:11.930Z\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 01 Aug 2026 03:53:13 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:9000/api/proyectos/49e6a30a-8041-44d7-908f-a83d44963db1"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"49e6a30a-8041-44d7-908f-a83d44963db1\",\n    \"nombre\": \"Kanban\",\n    \"descripcion\": \"Test\",\n    \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\n    \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\n    \"estado\": 1,\n    \"activo\": true\n}"
+            },
+            {
+              "name": "Crear - Miembro no autorizado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nombre\": \"Sin token\",//\"Proyecto Kanban\",\r\n  \"descripcion\": \"Test\",\r\n  \"fechaInicio\": \"2026-07-31T22:34:11.930Z\",\r\n  \"fechaFinPrevista\": \"2026-08-04T22:34:11.930Z\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Length",
+                  "value": "0"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 03:32:49 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Kanban\",\r\n    \"descripcion\": \"Test ACTUALIZACION\",\r\n    \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\r\n    \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\r\n    \"estado\": 1,\r\n    \"activo\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/proyectos/e8a43cc3-8f93-406c-a74c-1b3a5a7aa482",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "proyectos",
+                "e8a43cc3-8f93-406c-a74c-1b3a5a7aa482"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Actualizar",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nombre\": \"Kanban\",\r\n    \"descripcion\": \"Test ACTUALIZACION\",\r\n    \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\r\n    \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\r\n    \"estado\": 1,\r\n    \"activo\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos/49e6a30a-8041-44d7-908f-a83d44963db1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos",
+                    "49e6a30a-8041-44d7-908f-a83d44963db1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 01 Aug 2026 04:00:45 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"49e6a30a-8041-44d7-908f-a83d44963db1\",\n    \"nombre\": \"Kanban\",\n    \"descripcion\": \"Test ACTUALIZACION\",\n    \"fechaInicio\": \"2026-07-31T22:34:11.93Z\",\n    \"fechaFinPrevista\": \"2026-08-04T22:34:11.93Z\",\n    \"estado\": 1,\n    \"activo\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/proyectos/b93b005a-5764-4caf-802b-0d8512e4db29",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "proyectos",
+                "b93b005a-5764-4caf-802b-0d8512e4db29"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Eliminar",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/proyectos/b93b005a-5764-4caf-802b-0d8512e4db29",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "proyectos",
+                    "b93b005a-5764-4caf-802b-0d8512e4db29"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 01 Aug 2026 04:02:44 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gestion Columnas",
+      "item": [
+        {
+          "name": "Listado - ObtenerPorProyecto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/columnas/proyecto/cf3bdf68-175e-4a38-90db-e37f7282c805",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "columnas",
+                "proyecto",
+                "cf3bdf68-175e-4a38-90db-e37f7282c805"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Listado - ObtenerPorProyecto",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/columnas/proyecto/e8a43cc3-8f93-406c-a74c-1b3a5a7aa482",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "columnas",
+                    "proyecto",
+                    "e8a43cc3-8f93-406c-a74c-1b3a5a7aa482"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 03:53:53 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"7b62d78c-18ad-441d-8ba9-f7709285c9e2\",\n        \"nombre\": \"Por hacer\",\n        \"orden\": 0,\n        \"proyectoId\": \"e8a43cc3-8f93-406c-a74c-1b3a5a7aa482\",\n        \"activa\": true,\n        \"tareas\": []\n    }\n]"
+            },
+            {
+              "name": "Listado - ObtenerPorProyecto",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/columnas/proyecto/cf3bdf68-175e-4a38-90db-e37f7282c805",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "columnas",
+                    "proyecto",
+                    "cf3bdf68-175e-4a38-90db-e37f7282c805"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 04 Aug 2026 03:02:54 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n        \"nombre\": \"Levantamiento de informacion 2\",\n        \"orden\": 0,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": [\n            {\n                \"id\": \"b9e11bf3-e7e1-40b8-a7f0-723c000966a3\",\n                \"titulo\": \"CCCC\",\n                \"descripcion\": \"cccc\",\n                \"prioridad\": 1,\n                \"orden\": 1250,\n                \"fechaCreacion\": \"2026-08-04T01:13:35.866836Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            },\n            {\n                \"id\": \"20d3b2dd-704f-47e0-8c6f-2915a2dbb795\",\n                \"titulo\": \"asda\",\n                \"descripcion\": \"asdas\",\n                \"prioridad\": 3,\n                \"orden\": 2500,\n                \"fechaCreacion\": \"2026-08-04T01:10:28.572427Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n                \"responsableNombre\": \"Miembro\"\n            },\n            {\n                \"id\": \"d0d35334-20dc-47b2-bdab-f79e7f2fb671\",\n                \"titulo\": \"AAA\",\n                \"descripcion\": \"BBB\",\n                \"prioridad\": 2,\n                \"orden\": 3250,\n                \"fechaCreacion\": \"2026-08-04T01:11:45.024011Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n                \"responsableNombre\": \"Miembro\"\n            },\n            {\n                \"id\": \"f81bc6f5-260e-4c7a-93d1-390a5d3c846d\",\n                \"titulo\": \"DDDD\",\n                \"descripcion\": \"ddd\",\n                \"prioridad\": 1,\n                \"orden\": 4000,\n                \"fechaCreacion\": \"2026-08-04T01:14:30.273722Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            },\n            {\n                \"id\": \"ffcae6b5-43ee-4774-8c5b-367684a0b2cf\",\n                \"titulo\": \"sdfsd\",\n                \"descripcion\": \"sdgsd\",\n                \"prioridad\": 2,\n                \"orden\": 5000,\n                \"fechaCreacion\": \"2026-08-04T02:58:11.479946Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": null,\n                \"responsableNombre\": null\n            },\n            {\n                \"id\": \"22bdf5ad-078b-415b-8139-aa3690f1b8d5\",\n                \"titulo\": \"sdgsd\",\n                \"descripcion\": \"sdgsd\",\n                \"prioridad\": 3,\n                \"orden\": 6000,\n                \"fechaCreacion\": \"2026-08-04T02:58:17.982824Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            }\n        ]\n    },\n    {\n        \"id\": \"f9276fbc-65f2-4bf2-b8af-ffafa797777f\",\n        \"nombre\": \"Por hacer \",\n        \"orden\": 1,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": [\n            {\n                \"id\": \"71054b84-dd33-48ea-b63f-72a7e8198f07\",\n                \"titulo\": \"Prueba eliminar columna\",\n                \"descripcion\": \"asdas\",\n                \"prioridad\": 1,\n                \"orden\": 1000,\n                \"fechaCreacion\": \"2026-08-04T01:41:07.307481Z\",\n                \"columnaId\": \"f9276fbc-65f2-4bf2-b8af-ffafa797777f\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2097641a-905b-47d0-b402-db1257c13857\",\n        \"nombre\": \"Columnna 3\",\n        \"orden\": 2,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": []\n    },\n    {\n        \"id\": \"82fc713b-52ad-4cae-a3e8-ae870b704b12\",\n        \"nombre\": \"Columnna6\",\n        \"orden\": 3,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": [\n            {\n                \"id\": \"237a5e06-1371-4ff0-9ba7-9f84d42356dc\",\n                \"titulo\": \"Prueba\",\n                \"descripcion\": \"ggggg\",\n                \"prioridad\": 2,\n                \"orden\": 1000,\n                \"fechaCreacion\": \"2026-08-04T02:38:48.997455Z\",\n                \"columnaId\": \"82fc713b-52ad-4cae-a3e8-ae870b704b12\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            }\n        ]\n    },\n    {\n        \"id\": \"acbfd4c0-c76d-4482-975c-d909004f4ef7\",\n        \"nombre\": \"Columnna 2\",\n        \"orden\": 4,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": []\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Por hacer\", //\"Realizando\",\r\n  \"proyectoId\": \"8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/columnas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "columnas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Crear",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nombre\": \"Por hacer\",\r\n  \"proyectoId\": \"e8a43cc3-8f93-406c-a74c-1b3a5a7aa482\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/columnas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "columnas"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 03:53:41 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:9000/api/columnas/proyecto/e8a43cc3-8f93-406c-a74c-1b3a5a7aa482"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"7b62d78c-18ad-441d-8ba9-f7709285c9e2\",\n    \"nombre\": \"Por hacer\",\n    \"orden\": 0,\n    \"proyectoId\": \"e8a43cc3-8f93-406c-a74c-1b3a5a7aa482\",\n    \"activa\": true,\n    \"tareas\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Por hacer 123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/columnas/141c29cc-548b-4f8c-9b1f-38df8f91fbe2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "columnas",
+                "141c29cc-548b-4f8c-9b1f-38df8f91fbe2"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Actualizar",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nombre\": \"Por hacer 123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/columnas/141c29cc-548b-4f8c-9b1f-38df8f91fbe2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "columnas",
+                    "141c29cc-548b-4f8c-9b1f-38df8f91fbe2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 15:39:49 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n    \"nombre\": \"Por hacer 123\",\n    \"orden\": 0,\n    \"proyectoId\": \"8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6\",\n    \"activa\": true,\n    \"tareas\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "Reordenar",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\r\n  \"ColumnasOrdenadas\": [\r\n    \"2097641a-905b-47d0-b402-db1257c13857\",\r\n    \"acbfd4c0-c76d-4482-975c-d909004f4ef7\",\r\n    \"82fc713b-52ad-4cae-a3e8-ae870b704b12\",\r\n    \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\r\n    \"f9276fbc-65f2-4bf2-b8af-ffafa797777f\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/columnas/reordenar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "columnas",
+                "reordenar"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Reordenar",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\r\n  \"ColumnasOrdenadas\": [\r\n    \"2097641a-905b-47d0-b402-db1257c13857\",\r\n    \"acbfd4c0-c76d-4482-975c-d909004f4ef7\",\r\n    \"82fc713b-52ad-4cae-a3e8-ae870b704b12\",\r\n    \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\r\n    \"f9276fbc-65f2-4bf2-b8af-ffafa797777f\"\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/columnas/reordenar",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "columnas",
+                    "reordenar"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 04 Aug 2026 02:21:47 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"2097641a-905b-47d0-b402-db1257c13857\",\n        \"nombre\": \"Columnna 3\",\n        \"orden\": 0,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": []\n    },\n    {\n        \"id\": \"acbfd4c0-c76d-4482-975c-d909004f4ef7\",\n        \"nombre\": \"Columnna 2\",\n        \"orden\": 1,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": []\n    },\n    {\n        \"id\": \"82fc713b-52ad-4cae-a3e8-ae870b704b12\",\n        \"nombre\": \"Columnna6\",\n        \"orden\": 2,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": []\n    },\n    {\n        \"id\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n        \"nombre\": \"Levantamiento de informacion 2\",\n        \"orden\": 3,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": [\n            {\n                \"id\": \"b9e11bf3-e7e1-40b8-a7f0-723c000966a3\",\n                \"titulo\": \"CCCC\",\n                \"descripcion\": \"cccc\",\n                \"prioridad\": 1,\n                \"orden\": 1250,\n                \"fechaCreacion\": \"2026-08-04T01:13:35.866836Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            },\n            {\n                \"id\": \"20d3b2dd-704f-47e0-8c6f-2915a2dbb795\",\n                \"titulo\": \"asda\",\n                \"descripcion\": \"asdas\",\n                \"prioridad\": 3,\n                \"orden\": 2500,\n                \"fechaCreacion\": \"2026-08-04T01:10:28.572427Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n                \"responsableNombre\": \"Miembro\"\n            },\n            {\n                \"id\": \"d0d35334-20dc-47b2-bdab-f79e7f2fb671\",\n                \"titulo\": \"AAA\",\n                \"descripcion\": \"BBB\",\n                \"prioridad\": 2,\n                \"orden\": 3250,\n                \"fechaCreacion\": \"2026-08-04T01:11:45.024011Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n                \"responsableNombre\": \"Miembro\"\n            },\n            {\n                \"id\": \"f81bc6f5-260e-4c7a-93d1-390a5d3c846d\",\n                \"titulo\": \"DDDD\",\n                \"descripcion\": \"ddd\",\n                \"prioridad\": 1,\n                \"orden\": 4000,\n                \"fechaCreacion\": \"2026-08-04T01:14:30.273722Z\",\n                \"columnaId\": \"e2ccf151-59e2-493b-8cd9-1d13b13232fe\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            }\n        ]\n    },\n    {\n        \"id\": \"f9276fbc-65f2-4bf2-b8af-ffafa797777f\",\n        \"nombre\": \"Por hacer \",\n        \"orden\": 4,\n        \"proyectoId\": \"cf3bdf68-175e-4a38-90db-e37f7282c805\",\n        \"activa\": true,\n        \"tareas\": [\n            {\n                \"id\": \"71054b84-dd33-48ea-b63f-72a7e8198f07\",\n                \"titulo\": \"Prueba eliminar columna\",\n                \"descripcion\": \"asdas\",\n                \"prioridad\": 1,\n                \"orden\": 1000,\n                \"fechaCreacion\": \"2026-08-04T01:41:07.307481Z\",\n                \"columnaId\": \"f9276fbc-65f2-4bf2-b8af-ffafa797777f\",\n                \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n                \"responsableNombre\": \"Administrador\"\n            }\n        ]\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/columnas/259d5160-9670-4121-ab2d-ad2d1894bb07",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "columnas",
+                "259d5160-9670-4121-ab2d-ad2d1894bb07"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Eliminar",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/columnas/7b62d78c-18ad-441d-8ba9-f7709285c9e2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "columnas",
+                    "7b62d78c-18ad-441d-8ba9-f7709285c9e2"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 03:55:02 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gestion Tareas",
+      "item": [
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Proyecto-Id",
+                "value": "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"titulo\": \"Test de pruebas 3 \",\r\n  \"descripcion\": \"Test de solucion 3\",\r\n  \"prioridad\": 2,\r\n  \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\r\n  \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\"\r\n}\r\n\r\n/*\r\n{\r\n  \"titulo\": \"Diseño de requisitos\",\r\n  \"descripcion\": \"Diseñar una solucion\",\r\n  \"prioridad\": 4,\r\n  \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\r\n  \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\"\r\n}\r\n*/\r\n\r\n/*\r\n{\r\n  \"titulo\": \"Analisis de requerimiento\",\r\n  \"descripcion\": \"Revisar si existen ambiguedades\",\r\n  \"prioridad\": 1,\r\n  \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\r\n  \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\"\r\n}\r\n*/",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/tareas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "tareas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Crear",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-Proyecto-Id",
+                    "value": "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"titulo\": \"Analisis de requerimiento\",\r\n  \"descripcion\": \"Revisar si existen ambiguedades\",\r\n  \"prioridad\": 1,\r\n  \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\r\n  \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/tareas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "tareas"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 15:44:42 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:9000/api/tareas/proyecto/8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"64024faa-ecde-4c0a-8771-e69870812711\",\n    \"titulo\": \"Analisis de requerimiento\",\n    \"descripcion\": \"Revisar si existen ambiguedades\",\n    \"prioridad\": 1,\n    \"orden\": 1000,\n    \"fechaCreacion\": \"2026-08-02T15:43:59.5597323Z\",\n    \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n    \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n    \"responsableNombre\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "ObtenerPorProyecto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/tareas/proyecto/8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "tareas",
+                "proyecto",
+                "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "ObtenerPorProyecto",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/tareas/proyecto/8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "tareas",
+                    "proyecto",
+                    "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 15:46:53 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"64024faa-ecde-4c0a-8771-e69870812711\",\n        \"titulo\": \"Analisis de requerimiento\",\n        \"descripcion\": \"Revisar si existen ambiguedades\",\n        \"prioridad\": 1,\n        \"orden\": 1000,\n        \"fechaCreacion\": \"2026-08-02T15:43:59.559732Z\",\n        \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n        \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n        \"responsableNombre\": \"Miembro\"\n    }\n]"
+            },
+            {
+              "name": "ObtenerPorProyecto",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/tareas/proyecto/8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "tareas",
+                    "proyecto",
+                    "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 16:03:58 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"64024faa-ecde-4c0a-8771-e69870812711\",\n        \"titulo\": \"Analisis de requerimiento 2\",\n        \"descripcion\": \"Revisar si existen ambiguedades 2\",\n        \"prioridad\": 1,\n        \"orden\": 1000,\n        \"fechaCreacion\": \"2026-08-02T15:43:59.559732Z\",\n        \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n        \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n        \"responsableNombre\": \"Administrador\"\n    },\n    {\n        \"id\": \"0656da82-28be-4068-90b8-2851b7614be4\",\n        \"titulo\": \"Diseño de requisitos\",\n        \"descripcion\": \"Diseñar una solucion\",\n        \"prioridad\": 4,\n        \"orden\": 1000,\n        \"fechaCreacion\": \"2026-08-02T15:53:59.957199Z\",\n        \"columnaId\": \"350ee08c-7c86-40f1-8f52-e57c83dae232\",\n        \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n        \"responsableNombre\": \"Miembro\"\n    },\n    {\n        \"id\": \"3db0caf6-7c1e-4ea3-853e-093b7a72d959\",\n        \"titulo\": \"Test de pruebas\",\n        \"descripcion\": \"Test de solucion\",\n        \"prioridad\": 3,\n        \"orden\": 2000,\n        \"fechaCreacion\": \"2026-08-02T16:03:11.729506Z\",\n        \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n        \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n        \"responsableNombre\": \"Miembro\"\n    },\n    {\n        \"id\": \"f06208c8-5c67-46e2-bc51-7228722ae35b\",\n        \"titulo\": \"Test de pruebas 2 \",\n        \"descripcion\": \"Test de solucion 2\",\n        \"prioridad\": 2,\n        \"orden\": 3000,\n        \"fechaCreacion\": \"2026-08-02T16:03:52.052466Z\",\n        \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n        \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n        \"responsableNombre\": \"Miembro\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Actualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Proyecto-Id",
+                "value": "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"titulo\": \"Analisis de requerimiento 2\",\r\n  \"descripcion\": \"Revisar si existen ambiguedades 2\",\r\n  \"prioridad\": 1,\r\n  \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/tareas/64024faa-ecde-4c0a-8771-e69870812711",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "tareas",
+                "64024faa-ecde-4c0a-8771-e69870812711"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Actualizar",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "X-Proyecto-Id",
+                    "value": "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"titulo\": \"Analisis de requerimiento 2\",\r\n  \"descripcion\": \"Revisar si existen ambiguedades 2\",\r\n  \"prioridad\": 1,\r\n  \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/tareas/64024faa-ecde-4c0a-8771-e69870812711",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "tareas",
+                    "64024faa-ecde-4c0a-8771-e69870812711"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 15:50:49 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"64024faa-ecde-4c0a-8771-e69870812711\",\n    \"titulo\": \"Analisis de requerimiento 2\",\n    \"descripcion\": \"Revisar si existen ambiguedades 2\",\n    \"prioridad\": 1,\n    \"orden\": 1000,\n    \"fechaCreacion\": \"2026-08-02T15:43:59.559732Z\",\n    \"columnaId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\",\n    \"responsableId\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n    \"responsableNombre\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Mover",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Proyecto-Id",
+                "value": "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"tareaId\": \"f06208c8-5c67-46e2-bc51-7228722ae35b\",\r\n  \"columnaDestinoId\": \"141c29cc-548b-4f8c-9b1f-38df8f91fbe2\", // misma columna \r\n  \"nuevaPosicion\": 1 //solo cambiar posicion\r\n}\r\n\r\n/*\r\n{\r\n  \"tareaId\": \"0656da82-28be-4068-90b8-2851b7614be4\",\r\n  \"columnaDestinoId\": \"350ee08c-7c86-40f1-8f52-e57c83dae232\",\r\n  \"nuevaPosicion\": 1\r\n}\r\n*/",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/tareas/mover",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "tareas",
+                "mover"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Mover",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "X-Proyecto-Id",
+                    "value": "8b5a4231-c5e7-4259-b7e8-a4cd4714e1c6",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"tareaId\": \"0656da82-28be-4068-90b8-2851b7614be4\",\r\n  \"columnaDestinoId\": \"350ee08c-7c86-40f1-8f52-e57c83dae232\",\r\n  \"nuevaPosicion\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/tareas/mover",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "tareas",
+                    "mover"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 16:01:33 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"0656da82-28be-4068-90b8-2851b7614be4\",\n    \"titulo\": \"Diseño de requisitos\",\n    \"descripcion\": \"Diseñar una solucion\",\n    \"prioridad\": 4,\n    \"orden\": 1000,\n    \"fechaCreacion\": \"2026-08-02T15:53:59.957199Z\",\n    \"columnaId\": \"350ee08c-7c86-40f1-8f52-e57c83dae232\",\n    \"responsableId\": \"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\n    \"responsableNombre\": \"Miembro\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9000/api/tareas/66645411-f164-43fc-876a-015b60e9f81c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "tareas",
+                "66645411-f164-43fc-876a-015b60e9f81c"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Eliminar",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:9000/api/tareas/66645411-f164-43fc-876a-015b60e9f81c",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "tareas",
+                    "66645411-f164-43fc-876a-015b60e9f81c"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sun, 02 Aug 2026 15:52:38 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                }
+              ],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"correoElectronico\": \"admin@gestion.com\",\r\n  \"password\": \"Admin123!\"\r\n}\r\n/*\r\n{\r\n  \"correoElectronico\": \"miembro@gestion.com\",\r\n  \"password\": \"Miembro123!\"\r\n}\r\n*/\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"correoElectronico\": \"admin@gestion.com\",\r\n  \"password\": \"Admin123!\"\r\n}\r\n/*\r\n{\r\n  \"correoElectronico\": \"miembro@gestion.com\",\r\n  \"password\": \"Miembro123!\"\r\n}\r\n*/",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/auth/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 03:25:40 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImExYjJjM2Q0LWU1ZjYtNzg5MC1hYmNkLWVmMTIzNDU2Nzg5MCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluQGdlc3Rpb24uY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNzg1OTI5MTEyLCJpc3MiOiJHZXN0aW9uUHJveWVjdG9zQVBJIiwiYXVkIjoiR2VzdGlvblByb3llY3Rvc1dlYiJ9.IMfGa_AFBhecqhrbZysVeZHjb0-R1dPnNwQE5yhRw9g\",\n    \"usuario\": {\n        \"id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\n        \"nombre\": \"Administrador\",\n        \"correoElectronico\": \"admin@gestion.com\",\n        \"rol\": 1,\n        \"activo\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Registro",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Usuario miembro 2\",\r\n  \"correoElectronico\": \"miembro2@gmail.com\",\r\n  \"password\": \"clave.10\",\r\n  \"rol\": 1 //1 -> Admin | 2 -> Miembro\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9000/api/auth/registro",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "api",
+                "auth",
+                "registro"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Registro",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nombre\": \"Usuario miembro 2\",\r\n  \"correoElectronico\": \"miembro2@gmail.com\",\r\n  \"password\": \"clave.10\",\r\n  \"rol\": 1 //1 -> Admin | 2 -> Miembro\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:9000/api/auth/registro",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "9000",
+                  "path": [
+                    "api",
+                    "auth",
+                    "registro"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 03:28:07 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "Kestrel"
+                },
+                {
+                  "key": "Location",
+                  "value": "http://localhost:9000/api/auth/login"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImYxNTVmMjA3LTdlMjEtNDcxOS05ZjM2LWIyYTcxZjZhMzdkYyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Im1pZW1icm8yQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJVc3VhcmlvIG1pZW1icm8gMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE3ODU5MjkyODgsImlzcyI6Ikdlc3Rpb25Qcm95ZWN0b3NBUEkiLCJhdWQiOiJHZXN0aW9uUHJveWVjdG9zV2ViIn0.apXczlCc4B3BA4siY8anSICX7U0Tj1Wyw6-3dKHLoVk\",\n    \"usuario\": {\n        \"id\": \"f155f207-7e21-4719-9f36-b2a71f6a37dc\",\n        \"nombre\": \"Usuario miembro 2\",\n        \"correoElectronico\": \"miembro2@gmail.com\",\n        \"rol\": 1,\n        \"activo\": true\n    }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
