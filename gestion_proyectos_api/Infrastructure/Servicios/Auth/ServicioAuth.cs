@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 
 
-namespace Infrastructure.Auth
+namespace Infrastructure.Servicios.Auth
 {
     /// <summary>
     /// Implementación del servicio de autenticación.

@@ -1,10 +1,11 @@
 ﻿using Application.CasosDeUso;
 using Application.Interfaces;
 using Domain.Puertos;
-using Infrastructure.Auth;
-using Infrastructure.ComunicacionContinua;
 using Infrastructure.Persistencia;
 using Infrastructure.Persistencia.Repositorios;
+using Infrastructure.Servicios.Auth;
+using Infrastructure.Servicios.ComunicacionContinua;
+using Infrastructure.Servicios.Reportes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,10 @@ namespace gestion_proyectos_api
             services.AddScoped<TareaUC>();
             services.AddScoped<UsuarioUC>();
             services.AddScoped<AuthUC>();
+
+            //Reportes
+            services.AddScoped<ServicioPdf>();
+            services.AddScoped<ServicioExcel>();
 
             //Servicios
             services.AddScoped<IServicioAuth, ServicioAuth>();
