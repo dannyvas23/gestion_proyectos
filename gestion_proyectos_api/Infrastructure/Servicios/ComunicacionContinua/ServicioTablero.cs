@@ -1,9 +1,8 @@
 using Application.DTOs;
 using Application.Interfaces;
-using Infrastructure.SignalR;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Infrastructure.ComunicacionContinua;
+namespace Infrastructure.Servicios.ComunicacionContinua;
 
 /// <summary>
 /// Implementación del servicio de notificaciones en tiempo real.
