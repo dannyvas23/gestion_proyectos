@@ -73,6 +73,7 @@ export class AuthService {
 
   esAdministrador(): boolean {
     const usuario = this.obtenerUsuarioActual();
+    console.log('Usuario actual:', usuario);
     return usuario?.rol === RolUsuario.Administrador;
   }
 

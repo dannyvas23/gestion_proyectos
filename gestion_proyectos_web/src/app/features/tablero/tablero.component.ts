@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,6 +16,8 @@ import { TareaService } from '../../core/services/tarea.service';
 import { ProyectoService } from '../../core/services/proyecto.service';
 import { SignalrService } from '../../core/services/signalr.service';
 import { UsuarioService } from '../../core/services/usuario.service';
+import { ReporteService } from '../../core/services/reporte.service';
+import { AuthService } from '../../core/services/auth.service';
 
 // Modelos
 import {
@@ -101,6 +103,9 @@ export class TableroComponent implements OnInit, OnDestroy {
     { label: 'Crítica', value: Prioridad.Critica }
   ];
 
+  dialogoReporteVisible = false;
+  reporteResponsableId: string | null = null;
+  reportePrioridad: Prioridad | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -110,9 +115,11 @@ export class TableroComponent implements OnInit, OnDestroy {
     private proyectoService: ProyectoService,
     private signalrService: SignalrService,
     private usuarioService: UsuarioService,
+    private reporteService: ReporteService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
+    private confirmationService: ConfirmationService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.proyectoId = this.route.snapshot.params['id'];
@@ -164,7 +171,7 @@ export class TableroComponent implements OnInit, OnDestroy {
     });
   }
 
-  
+
   getTareasFiltradas(tareas: TareaDto[]): TareaDto[] {
     let resultado = [...tareas];
 
@@ -404,35 +411,35 @@ export class TableroComponent implements OnInit, OnDestroy {
     this.signalrService.conectar(this.proyectoId).then(() => {
       // Escuchar eventos de otros usuarios
       this.signalrService.tareaCreada$.pipe(takeUntil(this.destroy$)).subscribe(({ tarea, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.tareaActualizada$.pipe(takeUntil(this.destroy$)).subscribe(({ tarea, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.tareaMovida$.pipe(takeUntil(this.destroy$)).subscribe(({ tarea, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.tareaEliminada$.pipe(takeUntil(this.destroy$)).subscribe(({ tareaId, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.columnaCreada$.pipe(takeUntil(this.destroy$)).subscribe(({ columna, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.columnaActualizada$.pipe(takeUntil(this.destroy$)).subscribe(({ columna, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.columnaEliminada$.pipe(takeUntil(this.destroy$)).subscribe(({ columnaId, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       this.signalrService.columnasReordenadas$.pipe(takeUntil(this.destroy$)).subscribe(({ columnas, usuarioId }) => {
-         this.cargarColumnas();
+        this.cargarColumnas();
       });
 
       // Indicador de usuarios conectados
@@ -487,6 +494,55 @@ export class TableroComponent implements OnInit, OnDestroy {
 
   trackByColumna(index: number, col: ColumnaDto): string { return col.id; }
   trackByTarea(index: number, tarea: TareaDto): string { return tarea.id; }
+
+  generarReporte(): void {
+    this.reporteResponsableId = null;
+    this.reportePrioridad = null;
+    this.dialogoReporteVisible = true;
+  }
+
+  descargarPdf(): void {
+    if (!this.proyectoId) return;
+    this.reporteService.generarPdf(this.proyectoId, this.reporteResponsableId, this.reportePrioridad)
+      .subscribe({
+        next: (blob) => {
+          this.descargarArchivo(blob, `Reporte_${this.generarFechaActual()}.pdf`);
+          this.dialogoReporteVisible = false;
+        },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo generar PDF' })
+      });
+  }
+
+  descargarExcel(): void {
+    if (!this.proyectoId) return;
+    this.reporteService.generarExcel(this.proyectoId, this.reporteResponsableId, this.reportePrioridad)
+      .subscribe({
+        next: (blob) => {
+          this.descargarArchivo(blob, `Reporte_${this.generarFechaActual()}.xlsx`);
+          this.dialogoReporteVisible = false;
+        },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo generar Excel' })
+      });
+  }
+
+  generarFechaActual(): string {
+      return formatDate(new Date(), 'yyyyMMdd_HHmm', 'en-US');
+  }
+
+  get esAdmin(): boolean {
+    return this.authService.esAdministrador();
+  }
+
+  private descargarArchivo(blob: Blob, nombre: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nombre;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
 }
 
 

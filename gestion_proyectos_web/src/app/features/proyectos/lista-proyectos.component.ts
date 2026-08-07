@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 // PrimeNG
@@ -17,9 +17,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 
-import { CrearProyectoPeticion, ActualizarProyectoPeticion, EstadoProyecto, ProyectoDto } from '../../core/models';
+import { CrearProyectoPeticion, ActualizarProyectoPeticion, EstadoProyecto, ProyectoDto, Prioridad, UsuarioDto } from '../../core/models';
 import { ProyectoService } from '../../core/services/proyecto.service';
 import { AuthService } from '../../core/services/auth.service';
+import { ReporteService } from '../../core/services/reporte.service';
+import { UsuarioService } from '../../core/services/usuario.service';
 
 /**
  * Lista de proyectos con paginación backend y filtro por nombre.
@@ -132,6 +134,15 @@ import { AuthService } from '../../core/services/auth.service';
                           pTooltip="Eliminar"
                           (onClick)="confirmarEliminar(proyecto)">
                 </p-button>
+                <p-button 
+                          *ngIf="esAdmin"
+                          icon="pi pi-file"
+                          [rounded]="true"
+                          [text]="true"
+                          severity="secondary"
+                          pTooltip="Reporte"
+                          (onClick)="generarReporte(proyecto)">
+                </p-button>
               </div>
             </td>
           </tr>
@@ -198,6 +209,30 @@ import { AuthService } from '../../core/services/auth.service';
       </ng-template>
     </p-dialog>
 
+    <!-- Diálogo reporte -->
+    <p-dialog header="Generar Reporte" [(visible)]="dialogoReporteVisible" [modal]="true" [style]="{ width: '400px' }">
+      <div class="flex flex-column gap-3 pt-3">
+        <div class="flex flex-column gap-1">
+          <label class="font-semibold">Responsable (Opcional)</label>
+          <p-dropdown [options]="usuarios" [(ngModel)]="reporteResponsableId"
+                      optionLabel="nombre" optionValue="id"
+                      placeholder="Todos" [showClear]="true" appendTo="body" [style]="{width: '100%'}">
+          </p-dropdown>
+        </div>
+        <div class="flex flex-column gap-1">
+          <label class="font-semibold">Prioridad (Opcional)</label>
+          <p-dropdown [options]="prioridades" [(ngModel)]="reportePrioridad"
+                      optionLabel="label" optionValue="value"
+                      placeholder="Todas" [showClear]="true" appendTo="body" [style]="{width: '100%'}">
+          </p-dropdown>
+        </div>
+        <div class="flex justify-content-between mt-3">
+          <p-button label="PDF" icon="pi pi-file-pdf" severity="danger" (onClick)="descargarPdf()"></p-button>
+          <p-button label="Excel" icon="pi pi-file-excel" severity="success" (onClick)="descargarExcel()"></p-button>
+        </div>
+      </div>
+    </p-dialog>
+
       
     </div>
   `,
@@ -238,8 +273,10 @@ export class ListaProyectosComponent {
     private fb: FormBuilder,
     private proyectoService: ProyectoService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,    
+    private confirmationService: ConfirmationService,
     private authService: AuthService,
+    private reporteService: ReporteService,
+    private usuarioService: UsuarioService,
     private router: Router
   ) { }
 
@@ -261,6 +298,18 @@ export class ListaProyectosComponent {
     { label: 'Finalizado', value: EstadoProyecto.Finalizado }
   ];
 
+  dialogoReporteVisible = false;
+  reporteProyectoId: string | null = null;
+  reporteResponsableId: string | null = null;
+  reportePrioridad: Prioridad | null = null;
+  usuarios: UsuarioDto[] = [];
+  prioridades = [
+    { label: 'Baja', value: Prioridad.Baja },
+    { label: 'Media', value: Prioridad.Media },
+    { label: 'Alta', value: Prioridad.Alta },
+    { label: 'Crítica', value: Prioridad.Critica }
+  ];
+
   ngOnInit(): void {
     this.formulario = this.fb.group({
       nombre: ['', []],
@@ -270,6 +319,14 @@ export class ListaProyectosComponent {
       estado: [EstadoProyecto.Activo]
     });
     this.cargarProyectos();
+    this.cargarUsuarios();
+  }
+
+  cargarUsuarios(): void {
+    this.usuarioService.obtenerTodos().subscribe({
+      next: (u) => this.usuarios = u,
+      error: () => console.error('Error al cargar usuarios')
+    });
   }
 
   cargarProyectos(): void {
@@ -332,8 +389,8 @@ export class ListaProyectosComponent {
         },
         error: (err) => {
           this.messageService.add({
-          severity: 'error', summary: 'Error', detail: err.status === 403 ? 'No tiene permisos para crear proyectos' : err.error?.error || 'Error al crear'
-        })
+            severity: 'error', summary: 'Error', detail: err.status === 403 ? 'No tiene permisos para crear proyectos' : err.error?.error || 'Error al crear'
+          })
         }
       });
     }
@@ -384,6 +441,52 @@ export class ListaProyectosComponent {
     });
   }
 
+  generarReporte(proyecto: ProyectoDto): void {
+    this.reporteProyectoId = proyecto.id;
+    this.reporteResponsableId = null;
+    this.reportePrioridad = null;
+    this.dialogoReporteVisible = true;
+  }
+
+  descargarPdf(): void {
+    if (!this.reporteProyectoId) return;
+    this.reporteService.generarPdf(this.reporteProyectoId, this.reporteResponsableId, this.reportePrioridad)
+      .subscribe({
+        next: (blob) => {
+          this.descargarArchivo(blob, `Reporte_${this.generarFechaActual()}.pdf`);
+          this.dialogoReporteVisible = false;
+        },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo generar PDF' })
+      });
+  }
+
+  descargarExcel(): void {
+    if (!this.reporteProyectoId) return;
+    this.reporteService.generarExcel(this.reporteProyectoId, this.reporteResponsableId, this.reportePrioridad)
+      .subscribe({
+        next: (blob) => {
+          this.descargarArchivo(blob, `Reporte_${this.generarFechaActual()}.xlsx`);
+          this.dialogoReporteVisible = false;
+        },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo generar Excel' })
+      });
+  }
+
+  generarFechaActual(): string {
+    return formatDate(new Date(), 'yyyyMMdd_HHmm', 'en-US');
+  }
+
+  private descargarArchivo(blob: Blob, nombre: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nombre;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
   filtrar(event: Event): void {
     this.filtroNombre = (event.target as HTMLInputElement).value;
     this.pagina = 1;
@@ -414,7 +517,7 @@ export class ListaProyectosComponent {
     }
   }
 
-   get esAdmin(): boolean {
+  get esAdmin(): boolean {
     return this.authService.esAdministrador();
   }
 }

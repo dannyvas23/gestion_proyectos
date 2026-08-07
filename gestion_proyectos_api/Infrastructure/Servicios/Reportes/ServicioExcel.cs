@@ -59,8 +59,8 @@ namespace Infrastructure.Servicios.Reportes
             }
 
             //Anchos de columna adecuados
-            hoja.Column(1).Width = 20;
-            hoja.Column(2).Width = 35;
+            hoja.Column(1).Width = 35;
+            hoja.Column(2).Width = 120;
             hoja.Column(3).Width = 25;
             hoja.Column(4).Width = 15;
 
